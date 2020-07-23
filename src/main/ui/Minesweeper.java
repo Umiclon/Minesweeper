@@ -1,6 +1,7 @@
 package ui;
 
-public class Main {
+// runs the game
+public class Minesweeper {
     public static void main(String[] args) {
 
     }
