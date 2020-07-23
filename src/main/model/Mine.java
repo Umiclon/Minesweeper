@@ -1,18 +1,18 @@
 package model;
 
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-
 // represents a mine block in a box on the game board
 public class Mine extends Box {
     private int state;
+    private static final int COVERED_MINE = 0;
+    private static final int UNCOVERED_MINE = 6;
+    private static final int FLAGGED_MINE = 7;
     private static final int MINE_X = 4;
     private static final int MINE_Y = 4;
     boolean flagged;
+    boolean gameOver;
 
     public Mine() {
-        state = 5;
+        state = COVERED_MINE;
         flagged = false;
     }
 
@@ -21,16 +21,33 @@ public class Mine extends Box {
     }
 
     public void changeState() {
-        state = 6;
+        if (isGameOver()) {
+            this.state = UNCOVERED_MINE;
+        } else if (state == COVERED_MINE && !isFlagged()) {
+            this.state = UNCOVERED_MINE;
+        } else if (state == COVERED_MINE && isFlagged()) {
+            state = FLAGGED_MINE;
+        } else if (state == FLAGGED_MINE && !isFlagged()) {
+            this.state = COVERED_MINE;
+        }
+    }
 
+    public void flag() {
+        this.flagged = !flagged;
+        changeState();
+    }
+
+    public void gameOver() {
+        this.gameOver = true;
+        changeState();
     }
 
     public boolean isFlagged() {
-        return flagged;
+        return this.flagged;
     }
 
     public boolean isGameOver() {
-        return false;
+        return this.gameOver;
     }
 
 }

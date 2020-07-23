@@ -5,37 +5,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 // tests for the minesweeper game
-class TestMinesweeper {
+class BoardTest {
     private Box[][] board;
 
     @BeforeEach
     void runBefore(){
-        board = new Box[12][12];
+        board = new Box[15][15];
     }
 
     @Test
-    void testBlock(){
-
+    void testSetUp(){
+        //assertTrue(setUp());
     }
 
     @Test
-    void testBoard(){
+    void testFillBoard(){
         //assertTrue(board.fillBoard());
     }
 
     @Test
-    void testMine(){
-
-    }
-
-    @Test
-    void testFlag(){
-
-    }
-
-    @Test
-    void testMinesweeper(){
-
+    void testMousePressed(){
+        //assertTrue(board.mousePressed());
     }
 
 }

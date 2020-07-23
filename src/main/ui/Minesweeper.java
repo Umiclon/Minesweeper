@@ -12,14 +12,22 @@ public class Minesweeper {
     int coordinate;
     String command;
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: reads user input
+     */
     public Minesweeper() {
         runMinesweeper();
         input = new Scanner(System.in);
     }
 
-    //EFFECTS: processes input
+    /*
+     * MODIFIES: this
+     * EFFECTS: reads user input
+     */
     private void runMinesweeper() {
-        coordinate = Integer.parseInt(input.next());
+        //command = input.next();
+        //coordinate = Integer.parseInt(command);
 
         displayBoard();
         updateBoard();
@@ -27,6 +35,9 @@ public class Minesweeper {
         flagBox();
     }
 
+    /*
+     * EFFECTS: displays the boxes on the board
+     */
     private void displayBoard() {
         board = new Box [SIZE][SIZE];
 
@@ -44,23 +55,43 @@ public class Minesweeper {
         }
     }
 
+    /*
+     * MODIFIES: game board
+     * EFFECTS: updates the board display
+     */
     private void updateBoard() {
         setUp();
         gameOver();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: selects a box and shows actions that can be done on the box
+     */
     private void selectBox() {
 
     }
 
+    /*
+     * MODIFIES: box
+     * EFFECTS: allows a box to be flagged
+     */
     private void flagBox() {
 
     }
 
+    /*
+     * MODIFIES: game
+     * EFFECTS: initializes the game
+     */
     private void setUp() {
 
     }
 
+    /*
+     * MODIFIES: game
+     * EFFECTS: runs the gameOver menu
+     */
     private void gameOver() {
 
     }
