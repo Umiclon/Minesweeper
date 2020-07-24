@@ -11,11 +11,19 @@ public class Block extends Box {
     private static final int FLAGGED_BLOCK = 2;
     private static final int BLOCK_X = 5;
     private static final int BLOCK_Y = 5;
-    boolean flagged = false;
-    boolean gameOver = false;
+    boolean flagged;
+    boolean gameOver;
+    String name;
 
     public Block() {
         state = COVERED_BLOCK;
+        flagged = false;
+        gameOver = false;
+        this.name = "block";
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public int getState() {
@@ -40,17 +48,12 @@ public class Block extends Box {
 
         for (int i = 0; i < board[0].length; i++) {
             for (int j = 0; j < board.length; j++) {
-                int state = board[i][j].state;
-                boolean flagged = board[i][j].flagged;
-                board[i][j].flagged = false;
-                board[i][j].changeState();
 
-                if (board[i][j].getState() >= 6) {
+                if (board[i][j].getName().equals("mine")) {
                     sum++;
                 }
 
-                board[i][j].state = state;
-                board[i][j].flagged = flagged;
+
             }
         }
         return sum;

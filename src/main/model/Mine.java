@@ -10,10 +10,17 @@ public class Mine extends Box {
     private static final int MINE_Y = 4;
     boolean flagged;
     boolean gameOver;
+    String name;
 
     public Mine() {
         state = COVERED_MINE;
         flagged = false;
+        gameOver = false;
+        this.name = "mine";
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public int getState() {

@@ -11,8 +11,7 @@ public class Minesweeper {
     private Box[][] board;
     private Box block = new Block();
     private Scanner input;
-    int coordinate;
-    String command;
+    int totalMines;
 
     /*
      * MODIFIES: this
@@ -20,7 +19,6 @@ public class Minesweeper {
      */
     public Minesweeper() {
         runMinesweeper();
-        input = new Scanner(System.in);
     }
 
     /*
@@ -28,12 +26,79 @@ public class Minesweeper {
      * EFFECTS: reads user input
      */
     private void runMinesweeper() {
-        //command = input.next();
-        //coordinate = Integer.parseInt(command);
+        int coordinate = 0;
+        String command = "";
+        boolean play = true;
+        input = new Scanner(System.in);
 
-        displayBoard();
-        selectBox();
-        flagBox();
+        init();
+
+        while (play) {
+            displayBoard();
+            command = input.next();
+
+            if (command.equals("r")) {
+                runMinesweeper();
+            } else if (command.equals("q")) {
+                play = false;
+                gameOver();
+            } else {
+                runCommands(command);
+                update();
+            }
+        }
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS:runs user command
+     */
+    private void runCommands(String command) {
+        if (command.equals("f")) {
+            flagBox();
+        } else if (command.equals("s")) {
+            selectBox();
+        } else {
+            System.out.println("Invalid Move");
+        }
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: selects a box and shows actions that can be done on the box
+     */
+    private void selectBox() {
+        System.out.println("Enter x position: ");
+        int x = input.nextInt();
+
+        System.out.println("Enter y position: ");
+        int y = input.nextInt();
+
+        for (int i = y - 1; i < y + 2; i++) {
+            for (int j = x - 1; j < x + 2; j++) {
+                board[i][j].changeState();
+                updateBoard(i, j);
+            }
+            System.out.println(" ");
+        }
+
+
+        System.out.println("The box at " + x + ", " + y + " has been uncovered");
+    }
+
+    /*
+     * MODIFIES: box
+     * EFFECTS: allows a box to be flagged
+     */
+    private void flagBox() {
+        System.out.println("Enter x position: ");
+        int x = input.nextInt();
+
+        System.out.println("Enter y position: ");
+        int y = input.nextInt();
+
+        board[y][x].flag();
+        System.out.println("The box at " + x + ", " + y + " has been flagged");
     }
 
     /*
@@ -59,51 +124,64 @@ public class Minesweeper {
         System.out.println();
     }
 
+    /*
+     * MODIFIES: game
+     * EFFECTS: runs the gameOver menu
+     */
+    private void gameOver() {
+        totalMines = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                updateBoard(i, j);
+            }
+            System.out.println(" ");
+        }
+        System.out.println("Number of Mines: " + totalMines);
+    }
 
     /*
      * EFFECTS: displays the boxes on the board
      */
     private void displayBoard() {
-        init();
-        updateBoard();
+        //update();
+        //gameOver();
     }
 
     /*
      * MODIFIES: game board
      * EFFECTS: updates the board display
      */
-    private void updateBoard() {
+    private void update() {
+        totalMines = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                board[i][j].changeState();
-                if (board[i][j].getState() < 5) {
-                    if (i >= 1 && i < SIZE - 1 && j >= 1 && j < SIZE - 1) {
-                        updateBox(i, j);
-                    } else if (j >= 1 && j < SIZE - 1 && i == 0) {
-                        updateTop(i, j);
-                    } else if (j >= 1 && j < SIZE - 1) {
-                        updateBot(i, j);
-                    } else if (i >= 1 && i < SIZE - 1 && j == 0) {
-                        updateLeft(i, j);
-                    } else if (i >= 1 && i < SIZE - 1) {
-                        updateRight(i, j);
-                    } else {
-                        updateCorner(i, j);
-                    }
-                } else {
-                    System.out.print("X ");
-                }
+                updateBoard(i, j);
             }
             System.out.println(" ");
         }
+        System.out.println("Number of Mines: " + totalMines);
+    }
 
-//        System.out.println();
-//        for (int i = 0; i < SIZE; i++) {
-//            for (int j = 0; j < SIZE; j++) {
-//                System.out.print(board[i][j].getState() + " ");
-//            }
-//            System.out.println(" ");
-//        }
+    private void updateBoard(int i, int j) {
+        //board[i][j].changeState();
+        if (board[i][j].getState() == 1) {
+            if (i >= 1 && i < SIZE - 1 && j >= 1 && j < SIZE - 1) {
+                updateBox(i, j);
+            } else if (j >= 1 && j < SIZE - 1 && i == 0) {
+                updateTop(i, j);
+            } else if (j >= 1 && j < SIZE - 1) {
+                updateBot(i, j);
+            } else if (i >= 1 && i < SIZE - 1 && j == 0) {
+                updateLeft(i, j);
+            } else if (i >= 1 && i < SIZE - 1) {
+                updateRight(i, j);
+            } else {
+                updateCorner(i, j);
+            }
+        } else {
+            System.out.print("0 ");
+            totalMines++;
+        }
     }
 
     private void updateBox(int i, int j) {
@@ -181,29 +259,4 @@ public class Minesweeper {
         System.out.print(board[i][j].numberOfSurroundingMines(a) + " ");
     }
 
-
-    /*
-     * MODIFIES: this
-     * EFFECTS: selects a box and shows actions that can be done on the box
-     */
-    private void selectBox() {
-
-    }
-
-    /*
-     * MODIFIES: box
-     * EFFECTS: allows a box to be flagged
-     */
-    private void flagBox() {
-
-    }
-
-
-    /*
-     * MODIFIES: game
-     * EFFECTS: runs the gameOver menu
-     */
-    private void gameOver() {
-
-    }
 }

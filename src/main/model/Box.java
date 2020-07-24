@@ -10,6 +10,7 @@ public class Box {
     int state;
     boolean flagged;
     boolean gameOver;
+    String name;
 
     /*
      * MODIFIES: this
@@ -18,8 +19,13 @@ public class Box {
     public Box() {
         state = 0;
         flagged = false;
+        gameOver = false;
+        this.name = "box";
     }
 
+    public String getName() {
+        return this.name;
+    }
 
     public int getState() {
         return this.state;
