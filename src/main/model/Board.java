@@ -16,24 +16,20 @@ public class Board {
     private static final int DIMENSION_Y = 500;
 
     /*
-     * MODIFIES: this
-     * EFFECTS:
+     * EFFECTS: creates a box array
      */
     public Board() {
         board = new Box[SIZE][SIZE];
     }
 
-    /*
-     * MODIFIES: this
-     * EFFECTS:
-     */
+
     public void setUp() {
         fillBoard();
     }
 
     /*
      * MODIFIES: this
-     * EFFECTS:
+     * EFFECTS: fills the board with blocks and mines
      */
     public boolean fillBoard() {
         for (int i = 0; i < this.board[0].length; i++) {
@@ -50,8 +46,8 @@ public class Board {
     }
 
     /*
-     * MODIFIES: this
-     * EFFECTS:
+     * MODIFIES: Box
+     * EFFECTS: changes the states of the boxes when pressed on
      */
     public void mousePressed() {
 

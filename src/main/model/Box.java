@@ -13,7 +13,6 @@ public class Box {
     String name;
 
     /*
-     * MODIFIES: this
      * EFFECTS: creates a box object
      */
     public Box() {
@@ -33,7 +32,7 @@ public class Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: changes state depending on the value of flagged and gameOver
+     * EFFECTS: changes state depending on flagged and gameOver
      */
     public void changeState() {
         this.state = 1;

@@ -15,6 +15,9 @@ public class Block extends Box {
     boolean gameOver;
     String name;
 
+    /*
+     * EFFECTS: creates a block object
+     */
     public Block() {
         state = COVERED_BLOCK;
         flagged = false;
@@ -30,6 +33,10 @@ public class Block extends Box {
         return this.state;
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: changes state depending on flagged and gameOver
+     */
     public void changeState() {
         if (isGameOver()) {
             this.state = UNCOVERED_BLOCK;
@@ -42,7 +49,10 @@ public class Block extends Box {
         }
     }
 
-
+    /*
+     * REQUIRES: board = new Box[3][3]
+     * EFFECTS: return number of mines in a 3x3 area on the board
+     */
     public int numberOfSurroundingMines(Box[][] board) {
         int sum = 0;
 
@@ -59,11 +69,19 @@ public class Block extends Box {
         return sum;
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: switches flagged from false to true and vice versa
+     */
     public void flag() {
         this.flagged = !flagged;
         changeState();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: sets gameOver to true
+     */
     public void gameOver() {
         this.gameOver = true;
         changeState();

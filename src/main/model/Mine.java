@@ -12,6 +12,9 @@ public class Mine extends Box {
     boolean gameOver;
     String name;
 
+    /*
+     * EFFECTS: creates a mine object
+     */
     public Mine() {
         state = COVERED_MINE;
         flagged = false;
@@ -27,6 +30,10 @@ public class Mine extends Box {
         return this.state;
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: changes state depending on flagged and gameOver
+     */
     public void changeState() {
         if (isGameOver()) {
             this.state = UNCOVERED_MINE;
@@ -34,16 +41,26 @@ public class Mine extends Box {
             this.state = UNCOVERED_MINE;
         } else if (state == COVERED_MINE && isFlagged()) {
             state = FLAGGED_MINE;
+            //System.out.println("mine has been flagged");
         } else if (state == FLAGGED_MINE && !isFlagged()) {
             this.state = COVERED_MINE;
+            //System.out.println("mine has been un-flagged");
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: switches flagged from false to true and vice versa
+     */
     public void flag() {
         this.flagged = !flagged;
         changeState();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: sets gameOver to true
+     */
     public void gameOver() {
         this.gameOver = true;
         changeState();
