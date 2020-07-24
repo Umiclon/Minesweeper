@@ -9,7 +9,7 @@ public class Minesweeper {
     private static final int SIZE = 15;
     private static final double DIFFICULTY = 0.25;
     private Box[][] board;
-    private Box block = new Block();
+    private final Box block = new Block();
     private Scanner input;
     int totalMines;
     int totalCovered;
@@ -28,8 +28,7 @@ public class Minesweeper {
      * EFFECTS: reads user input
      */
     private void runMinesweeper() {
-        int coordinate = 0;
-        String command = "";
+        String command;
         play = true;
         input = new Scanner(System.in);
 
@@ -39,16 +38,20 @@ public class Minesweeper {
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("start")) {
-                init();
-            } else if (command.equals("r")) {
-                runMinesweeper();
-            } else if (command.equals("q")) {
-                play = false;
-                quitMenu();
-            } else {
-                runCommands(command);
-                update();
+            switch (command) {
+                case "start":
+                    init();
+                    break;
+                case "r":
+                    runMinesweeper();
+                    break;
+                case "q":
+                    play = false;
+                    quitMenu();
+                    break;
+                default:
+                    runCommands(command);
+                    break;
             }
         }
     }
@@ -65,15 +68,8 @@ public class Minesweeper {
         } else {
             System.out.println();
             System.out.println("Invalid Move");
-            System.out.println();
+            rules();
         }
-
-        System.out.println();
-        System.out.println("Type 'r' to restart");
-        System.out.println("Type 'q' to quit");
-        System.out.println("Type 'f' to flag a box");
-        System.out.println("Type 's' to select a box");
-        System.out.println();
     }
 
 
@@ -82,13 +78,7 @@ public class Minesweeper {
      */
     private void init() {
         board = new Box[SIZE][SIZE];
-
-        System.out.println();
-        System.out.println("Type 'r' to restart");
-        System.out.println("Type 'q' to quit");
-        System.out.println("Type 'f' to flag a box");
-        System.out.println("Type 's' to select a box");
-        System.out.println();
+        rules();
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -112,7 +102,7 @@ public class Minesweeper {
         System.out.println();
         System.out.println("Welcome to Minesweeper 2020");
         System.out.println();
-        System.out.println("Type Start to Begin");
+        System.out.println("Type 'start' to begin");
         System.out.println();
     }
 
@@ -155,15 +145,14 @@ public class Minesweeper {
     private void selectBox() {
         System.out.println();
         System.out.println("Enter x position: ");
-        System.out.println();
         int x = input.nextInt();
 
         System.out.println();
         System.out.println("Enter y position: ");
-        System.out.println();
         int y = input.nextInt();
         System.out.println();
         System.out.println("The box at " + x + ", " + y + " has been uncovered");
+        System.out.println();
 
         if (board[y][x].getName().equals("block")) {
             for (int i = y - 1; i < y + 2; i++) {
@@ -173,6 +162,8 @@ public class Minesweeper {
                 }
                 System.out.println(" ");
             }
+            System.out.println();
+            update();
         } else {
             play = false;
             gameOver();
@@ -186,17 +177,25 @@ public class Minesweeper {
     private void flagBox() {
         System.out.println();
         System.out.println("Enter x position: ");
-        System.out.println();
         int x = input.nextInt();
 
         System.out.println();
         System.out.println("Enter y position: ");
-        System.out.println();
         int y = input.nextInt();
         System.out.println();
 
         board[y][x].flag();
         System.out.println("The box at " + x + ", " + y + " has been flagged");
+        update();
+    }
+
+    public void rules() {
+        System.out.println();
+        System.out.println("Type 'r' to restart");
+        System.out.println("Type 'q' to quit");
+        System.out.println("Type 'f' to flag a box");
+        System.out.println("Type 's' to select a box");
+        System.out.println();
     }
 
     /*
@@ -220,6 +219,7 @@ public class Minesweeper {
         }
         System.out.println("Mines Left: " + totalMines);
         System.out.println();
+        rules();
     }
 
     private void updateBoard(int i, int j) {
