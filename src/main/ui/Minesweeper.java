@@ -12,6 +12,8 @@ public class Minesweeper {
     private Box block = new Block();
     private Scanner input;
     int totalMines;
+    int totalCovered;
+    boolean play;
 
     /*
      * MODIFIES: this
@@ -28,20 +30,22 @@ public class Minesweeper {
     private void runMinesweeper() {
         int coordinate = 0;
         String command = "";
-        boolean play = true;
+        play = true;
         input = new Scanner(System.in);
 
-        init();
+        startMenu();
 
         while (play) {
-            displayBoard();
             command = input.next();
+            command = command.toLowerCase();
 
-            if (command.equals("r")) {
+            if (command.equals("start")) {
+                init();
+            } else if (command.equals("r")) {
                 runMinesweeper();
             } else if (command.equals("q")) {
                 play = false;
-                gameOver();
+                quitMenu();
             } else {
                 runCommands(command);
                 update();
@@ -50,7 +54,7 @@ public class Minesweeper {
     }
 
     /*
-     * MODIFIES: this
+     * MODIFIES:
      * EFFECTS:runs user command
      */
     private void runCommands(String command) {
@@ -59,53 +63,32 @@ public class Minesweeper {
         } else if (command.equals("s")) {
             selectBox();
         } else {
+            System.out.println();
             System.out.println("Invalid Move");
-        }
-    }
-
-    /*
-     * MODIFIES: this
-     * EFFECTS: selects a box and shows actions that can be done on the box
-     */
-    private void selectBox() {
-        System.out.println("Enter x position: ");
-        int x = input.nextInt();
-
-        System.out.println("Enter y position: ");
-        int y = input.nextInt();
-
-        for (int i = y - 1; i < y + 2; i++) {
-            for (int j = x - 1; j < x + 2; j++) {
-                board[i][j].changeState();
-                updateBoard(i, j);
-            }
-            System.out.println(" ");
+            System.out.println();
         }
 
-
-        System.out.println("The box at " + x + ", " + y + " has been uncovered");
+        System.out.println();
+        System.out.println("Type 'r' to restart");
+        System.out.println("Type 'q' to quit");
+        System.out.println("Type 'f' to flag a box");
+        System.out.println("Type 's' to select a box");
+        System.out.println();
     }
 
-    /*
-     * MODIFIES: box
-     * EFFECTS: allows a box to be flagged
-     */
-    private void flagBox() {
-        System.out.println("Enter x position: ");
-        int x = input.nextInt();
-
-        System.out.println("Enter y position: ");
-        int y = input.nextInt();
-
-        board[y][x].flag();
-        System.out.println("The box at " + x + ", " + y + " has been flagged");
-    }
 
     /*
      * EFFECTS: displays the initial board
      */
     private void init() {
         board = new Box[SIZE][SIZE];
+
+        System.out.println();
+        System.out.println("Type 'r' to restart");
+        System.out.println("Type 'q' to quit");
+        System.out.println("Type 'f' to flag a box");
+        System.out.println("Type 's' to select a box");
+        System.out.println();
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -119,32 +102,108 @@ public class Minesweeper {
             }
             System.out.println(" ");
         }
-
-
         System.out.println();
     }
+
+    /*
+     * EFFECTS: displays gameOver message
+     */
+    private void startMenu() {
+        System.out.println();
+        System.out.println("Welcome to Minesweeper 2020");
+        System.out.println();
+        System.out.println("Type Start to Begin");
+        System.out.println();
+    }
+
 
     /*
      * MODIFIES: game
      * EFFECTS: runs the gameOver menu
      */
     private void gameOver() {
+        System.out.println();
         totalMines = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
+                board[i][j].gameOver();
                 updateBoard(i, j);
             }
             System.out.println(" ");
         }
         System.out.println("Number of Mines: " + totalMines);
+        System.out.println();
+        System.out.println("GAME OVER");
+        System.out.println();
+        runMinesweeper();
+    }
+
+    /*
+     * EFFECTS: displays gameOver message
+     */
+    private void quitMenu() {
+        System.out.println();
+        System.out.println("Thank You For Playing");
+        System.out.println();
+        System.out.println("Bye!");
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: selects a box and shows actions that can be done on the box
+     */
+    private void selectBox() {
+        System.out.println();
+        System.out.println("Enter x position: ");
+        System.out.println();
+        int x = input.nextInt();
+
+        System.out.println();
+        System.out.println("Enter y position: ");
+        System.out.println();
+        int y = input.nextInt();
+        System.out.println();
+        System.out.println("The box at " + x + ", " + y + " has been uncovered");
+
+        if (board[y][x].getName().equals("block")) {
+            for (int i = y - 1; i < y + 2; i++) {
+                for (int j = x - 1; j < x + 2; j++) {
+                    board[i][j].changeState();
+                    updateBoard(i, j);
+                }
+                System.out.println(" ");
+            }
+        } else {
+            play = false;
+            gameOver();
+        }
+    }
+
+    /*
+     * MODIFIES: box
+     * EFFECTS: allows a box to be flagged
+     */
+    private void flagBox() {
+        System.out.println();
+        System.out.println("Enter x position: ");
+        System.out.println();
+        int x = input.nextInt();
+
+        System.out.println();
+        System.out.println("Enter y position: ");
+        System.out.println();
+        int y = input.nextInt();
+        System.out.println();
+
+        board[y][x].flag();
+        System.out.println("The box at " + x + ", " + y + " has been flagged");
     }
 
     /*
      * EFFECTS: displays the boxes on the board
      */
     private void displayBoard() {
-        //update();
-        //gameOver();
+
     }
 
     /*
@@ -159,7 +218,8 @@ public class Minesweeper {
             }
             System.out.println(" ");
         }
-        System.out.println("Number of Mines: " + totalMines);
+        System.out.println("Mines Left: " + totalMines);
+        System.out.println();
     }
 
     private void updateBoard(int i, int j) {
@@ -180,7 +240,10 @@ public class Minesweeper {
             }
         } else {
             System.out.print("0 ");
-            totalMines++;
+            totalCovered++;
+            if (board[i][j].getName().equals("mine")) {
+                totalMines++;
+            }
         }
     }
 
