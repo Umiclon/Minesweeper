@@ -21,10 +21,10 @@
 *As a user, I want to be able to...*
 
  - Phase 1: Basic Model and User Interaction
-    - *uncover a box on the board*
+    - *reveal a box on the board*
     - *flag and un-flag a box on the board*
-    - *see the amount of time passed*
-    - *view past scores and high score*
+    - *choose the size of the board*
+    - *view scoreboard*
     
  - Phase 2: Data Persistence
     - * *

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-// tests for the minesweeper game
+// tests for the board
 class BoardTest {
     private Board board;
 
