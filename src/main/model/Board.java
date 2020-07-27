@@ -9,18 +9,25 @@ import java.util.Random;
 
 //represents a game board with boxes that are either blocks or mines
 public class Board {
-    Box[][] board;
+    public Box[][] board;
     private static final double DIFFICULTY = 0.25;
     private static final int DIMENSION_X = 500;
     private static final int DIMENSION_Y = 500;
+    public int totalMines;
+    public int totalCovered;
+    public int minesFlagged;
+    public int mines;
 
     /*
-     * EFFECTS: creates a box array of size SIZE
+     * EFFECTS: creates a box array of size SIZE, sets counters to 0
      */
     public Board(int size) {
-        board = new Box[size][size];
+        this.board = new Box[size][size];
+        this.totalCovered = 0;
+        this.totalMines = 0;
+        this.mines = 0;
+        this.minesFlagged = 0;
     }
-
 
     /*
      * EFFECTS: sets up the board
@@ -39,6 +46,8 @@ public class Board {
                 double a = Math.random();
                 if (a < DIFFICULTY) {
                     board[i][j] = new Mine();
+                    totalMines++;
+                    mines++;
                 } else {
                     board[i][j] = new Block();
                 }
