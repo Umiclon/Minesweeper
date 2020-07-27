@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 //represents a scoreboard that shows name and time spent
 public class ScoreBoard {
-    ArrayList<String> scoreBoard;
+    public ArrayList<String> scoreBoard;
 
     /*
      * EFFECTS: creates a scoreboard with an arrayList and a string title "SCOREBOARD"
