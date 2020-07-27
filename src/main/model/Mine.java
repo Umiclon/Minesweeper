@@ -1,24 +1,23 @@
 package model;
 
 // represents a mine block in a box on the game board
+// mines will explode and end the game when uncovered
+// flagged mines cannot be uncovered unless un-flagged
 public class Mine extends Box {
-    private int state;
     private static final int COVERED_MINE = 0;
     private static final int UNCOVERED_MINE = 6;
     private static final int FLAGGED_MINE = 7;
     private static final int MINE_X = 4;
     private static final int MINE_Y = 4;
-    boolean flagged;
-    boolean gameOver;
-    String name;
 
     /*
-     * EFFECTS: creates a mine object
+     * EFFECTS: creates a mine object with int state COVERED_MINE, booleans flagged and gameOver false, and string name
+     * "mine"
      */
     public Mine() {
-        state = COVERED_MINE;
-        flagged = false;
-        gameOver = false;
+        this.state = COVERED_MINE;
+        this.flagged = false;
+        this.gameOver = false;
         this.name = "mine";
     }
 
@@ -37,12 +36,12 @@ public class Mine extends Box {
     public void changeState() {
         if (isGameOver()) {
             this.state = UNCOVERED_MINE;
-        } else if (state == COVERED_MINE && !isFlagged()) {
+        } else if (this.state == COVERED_MINE && !isFlagged()) {
             this.state = UNCOVERED_MINE;
-        } else if (state == COVERED_MINE && isFlagged()) {
-            state = FLAGGED_MINE;
+        } else if (this.state == COVERED_MINE && isFlagged()) {
+            this.state = FLAGGED_MINE;
             //System.out.println("mine has been flagged");
-        } else if (state == FLAGGED_MINE && !isFlagged()) {
+        } else if (this.state == FLAGGED_MINE && !isFlagged()) {
             this.state = COVERED_MINE;
             //System.out.println("mine has been un-flagged");
         }
@@ -50,20 +49,20 @@ public class Mine extends Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: switches flagged from false to true and vice versa
+     * EFFECTS: switches flagged from false to true and vice versa and updates the state
      */
     public void flag() {
         this.flagged = !flagged;
-        changeState();
+        this.changeState();
     }
 
     /*
      * MODIFIES: this
-     * EFFECTS: sets gameOver to true
+     * EFFECTS: sets gameOver to true and updates the state
      */
     public void gameOver() {
         this.gameOver = true;
-        changeState();
+        this.changeState();
     }
 
     public boolean isFlagged() {

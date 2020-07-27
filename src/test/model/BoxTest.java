@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-// tests for the minesweeper game
+// tests for box, block, and mine
 class BoxTest {
     private static final int COVERED_BLOCK = 0;
     private static final int UNCOVERED_BLOCK = 1;
@@ -98,5 +98,9 @@ class BoxTest {
         assertTrue(box.isGameOver());
     }
 
+    @Test
+    void testGetName() {
+        assertEquals(box.getName(), "box");
+    }
 
 }

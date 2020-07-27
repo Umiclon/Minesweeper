@@ -7,18 +7,18 @@ import java.awt.event.MouseEvent;
 //represents a box object on a board
 //the box can either be a block or a mine
 public class Box {
-    int state;
-    boolean flagged;
-    boolean gameOver;
-    String name;
+    protected int state;
+    protected boolean flagged;
+    protected boolean gameOver;
+    protected String name;
 
     /*
-     * EFFECTS: creates a box object
+     * EFFECTS: creates a box object with int state 0, booleans flagged and gameOver false, and string name "box"
      */
     public Box() {
-        state = 0;
-        flagged = false;
-        gameOver = false;
+        this.state = 0;
+        this.flagged = false;
+        this.gameOver = false;
         this.name = "box";
     }
 
@@ -32,7 +32,7 @@ public class Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: changes state depending on flagged and gameOver
+     * EFFECTS: changes the box state depending on flagged and gameOver
      */
     public void changeState() {
         this.state = 1;
@@ -40,7 +40,7 @@ public class Box {
 
     /*
      * REQUIRES: board = new Box[3][3]
-     * EFFECTS: return number of mines in a 3x3 area on the board
+     * EFFECTS: returns the number of mines in a 3x3 area on the board
      */
     public int numberOfSurroundingMines(Box[][] board) {
         return 0;
@@ -48,7 +48,7 @@ public class Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: switches flagged from false to true and vice versa
+     * EFFECTS: switches flagged from false to true and vice versa and updates the state
      */
     public void flag() {
         this.flagged = !flagged;
@@ -56,7 +56,7 @@ public class Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: sets gameOver to true
+     * EFFECTS: sets gameOver to true and updates the state
      */
     public void gameOver() {
         this.gameOver = true;

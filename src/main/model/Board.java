@@ -7,25 +7,27 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
-//creates a board and assigns a block or a mine to each box
+//represents a game board with boxes that are either blocks or mines
 public class Board {
     Box[][] board;
-    private static final int SIZE = 15;
     private static final double DIFFICULTY = 0.25;
     private static final int DIMENSION_X = 500;
     private static final int DIMENSION_Y = 500;
 
     /*
-     * EFFECTS: creates a box array
+     * EFFECTS: creates a box array of size SIZE
      */
-    public Board() {
-        board = new Box[SIZE][SIZE];
+    public Board(int size) {
+        board = new Box[size][size];
     }
 
 
-    public void setUp() {
-        fillBoard();
-    }
+    /*
+     * EFFECTS: sets up the board
+     */
+//    public void setUp() {
+//        fillBoard();
+//    }
 
     /*
      * MODIFIES: this
@@ -47,11 +49,11 @@ public class Board {
 
     /*
      * MODIFIES: Box
-     * EFFECTS: changes the states of the boxes when pressed on
+     * EFFECTS: changes the state of the box that was pressed on
      */
-    public void mousePressed() {
-
-    }
+//    public void mousePressed() {
+//
+//    }
 
 
 }
