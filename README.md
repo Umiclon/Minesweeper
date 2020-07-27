@@ -24,7 +24,7 @@
     - *reveal a box on the board*
     - *flag and un-flag a box on the board*
     - *choose the size of the board*
-    - *view scoreboard*
+    - *add name and score to the scoreboard*
     
  - Phase 2: Data Persistence
     - * *
