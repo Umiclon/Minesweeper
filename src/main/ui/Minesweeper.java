@@ -1,3 +1,6 @@
+//NOTE: the methods runMinesweeper and runCommands are based on this repository:
+//https://github.students.cs.ubc.ca/CPSC210/TellerApp
+
 package ui;
 
 import model.*;
@@ -390,7 +393,8 @@ public class Minesweeper {
     }
 
     /*
-     * EFFECTS: runs the winGame menu
+     * MODIFIES: ScoreBoard
+     * EFFECTS: runs the winGame menu and adds name and score to scoreboard
      */
     private void winGame() {
         printBoardSolution();
@@ -404,12 +408,16 @@ public class Minesweeper {
         runMinesweeper();
     }
 
+    /*
+     * EFFECTS: prints out the scoreBoard
+     */
     private void printScoreBoard() {
+        System.out.println();
         for (int i = 0; i < sb.scoreBoard.size(); i++) {
             System.out.println(sb.scoreBoard.get(i));
         }
         long end = System.nanoTime();
         long time = (end - start) / 1000000000;
-        System.out.println(time);
+        //System.out.println(time);
     }
 }
