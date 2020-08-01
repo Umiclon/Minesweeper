@@ -1,4 +1,4 @@
-package model;
+package src.main.model;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public class ScoreBoard {
      * EFFECTS: creates a scoreboard with an arrayList and a string title "SCOREBOARD"
      */
     public ScoreBoard() {
-        scoreBoard = new ArrayList<>();
+        scoreBoard = new ArrayList<String>();
     }
 
     /*

@@ -1,6 +1,9 @@
-package model;
+package src.test.model;
+
+import src.main.model.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,13 +13,13 @@ public class ScoreBoardTest {
     private ScoreBoard sb;
 
     @BeforeEach
-    void runBefore(){
+    void runBefore() {
         sb = new ScoreBoard();
     }
 
     @Test
-    void addEntryTest(){
-        sb.addEntry("Bob","5:00");
+    void addEntryTest() {
+        sb.addEntry("Bob", "5:00");
         assertEquals("Bob: 5:00", sb.scoreBoard.get(0));
     }
 }

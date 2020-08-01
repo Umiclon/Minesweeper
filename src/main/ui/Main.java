@@ -1,4 +1,4 @@
-package ui;
+package src.main.ui;
 
 public class Main {
 

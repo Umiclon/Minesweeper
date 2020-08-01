@@ -1,4 +1,5 @@
-package persistence;
+package src.main.persistence;
+
 
 public class Reader {
 }

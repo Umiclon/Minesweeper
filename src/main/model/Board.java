@@ -1,4 +1,4 @@
-package model;
+package src.main.model;
 
 import sun.applet.Main;
 
@@ -51,6 +51,7 @@ public class Board {
                 } else {
                     board[i][j] = new Block();
                 }
+                totalCovered++;
             }
         }
         return true;

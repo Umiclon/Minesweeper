@@ -1,9 +1,10 @@
 //NOTE: the methods runMinesweeper and runCommands are based on this repository:
 //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
-package ui;
+package src.main.ui;
 
-import model.*;
+import src.main.model.*;
+import src.main.persistence.*;
 
 import java.util.Scanner;
 
@@ -28,6 +29,7 @@ public class Minesweeper {
      * EFFECTS: reads and processes user input
      */
     private void runMinesweeper() {
+        Writer.write();
         String command;
         play = true;
         input = new Scanner(System.in);
@@ -38,20 +40,31 @@ public class Minesweeper {
             command = input.next();
             command = command.toLowerCase();
 
-            switch (command) {
-                case "start":
-                    init();
-                    break;
-                case "r":
-                    runMinesweeper();
-                    break;
-                case "q":
-                    play = false;
-                    quitMenu();
-                    break;
-                default:
-                    runCommands(command);
-                    break;
+//            switch (command) {
+//                case "start":
+//                    init();
+//                    break;
+//                case "r":
+//                    runMinesweeper();
+//                    break;
+//                case "q":
+//                    play = false;
+//                    quitMenu();
+//                    break;
+//                default:
+//                    runCommands(command);
+//                    break;
+//            }
+
+            if (command.equals("start")) {
+                init();
+            } else if (command.equals("r")) {
+                runMinesweeper();
+            } else if (command.equals("q")) {
+                play = false;
+                quitMenu();
+            } else {
+                runCommands(command);
             }
         }
     }
@@ -81,15 +94,15 @@ public class Minesweeper {
         size = input.nextInt();
         puzzle = new Board(size);
         commandList();
-        puzzle.setTotalMines(0);
-        puzzle.setTotalCovered(0);
-        puzzle.setMines(0);
+//        puzzle.setTotalMines(0);
+//        puzzle.setTotalCovered(0);
+//        puzzle.setMines(0);
 
         puzzle.fillBoard();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 System.out.print("X ");
-                puzzle.setTotalCovered(puzzle.getTotalCovered() + 1);
+//                puzzle.setTotalCovered(puzzle.getTotalCovered() + 1);
             }
             System.out.println(" ");
         }
