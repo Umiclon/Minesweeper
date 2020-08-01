@@ -31,26 +31,33 @@ class BoxTest {
 
     @Test
     void testChangeState() {
+        block.setState(0);
         assertEquals(0, block.getState());
         block.flag();
+        block.changeState();
         assertEquals(2, block.getState());
         block.flag();
+        block.changeState();
         assertEquals(0, block.getState());
         block.changeState();
         assertEquals(1,block.getState());
         block.gameOver();
         assertEquals(1, block.getState());
 
+        mine.setState(0);
         assertEquals(0, mine.getState());
         mine.flag();
+        mine.changeState();
         assertEquals(7, mine.getState());
         mine.flag();
+        mine.changeState();
         assertEquals(0, mine.getState());
         mine.changeState();
         assertEquals(6,mine.getState());
         mine.gameOver();
         assertEquals(6, mine.getState());
 
+        box.setState(0);
         box.changeState();
         assertEquals(1,box.getState());
     }
@@ -80,6 +87,8 @@ class BoxTest {
         assertFalse(box.isFlagged());
         box.flag();
         assertTrue(box.isFlagged());
+        box.flag();
+        assertFalse(box.isFlagged());
     }
 
     @Test

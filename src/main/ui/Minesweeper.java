@@ -217,6 +217,7 @@ public class Minesweeper {
 
         }
         puzzle.flag(x, y);
+        puzzle.changeState(x, y);
     }
 
     /*

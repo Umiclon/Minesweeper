@@ -29,6 +29,10 @@ public class Block extends Box {
         return this.state;
     }
 
+    public void setState(int i) {
+        this.state = i;
+    }
+
     /*
      * MODIFIES: this
      * EFFECTS: changes state depending on flagged and gameOver
@@ -68,7 +72,6 @@ public class Block extends Box {
      */
     public void flag() {
         this.flagged = !flagged;
-        this.changeState();
     }
 
     /*

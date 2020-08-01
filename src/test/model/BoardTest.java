@@ -53,10 +53,12 @@ class BoardTest {
     void testFlag() {
         board.setBox(1, 1, new Block());
         board.flag(1, 1);
+        board.changeState(1,1);
         assertTrue(board.isFlagged(1, 1));
         assertEquals(2, board.getState(1, 1));
         board.setBox(1, 1, new Mine());
         board.flag(1, 1);
+        board.changeState(1,1);
         assertTrue(board.isFlagged(1, 1));
         assertEquals(7, board.getState(1, 1));
     }

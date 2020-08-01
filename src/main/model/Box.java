@@ -30,6 +30,10 @@ public class Box {
         return this.state;
     }
 
+    public void setState(int i) {
+        this.state = i;
+    }
+
     /*
      * MODIFIES: this
      * EFFECTS: changes the box state depending on flagged and gameOver
