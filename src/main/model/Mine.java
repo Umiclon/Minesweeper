@@ -62,6 +62,7 @@ public class Mine extends Box {
      */
     public void gameOver() {
         this.gameOver = true;
+        this.flagged = false;
         this.changeState();
     }
 

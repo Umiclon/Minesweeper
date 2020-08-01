@@ -17,6 +17,6 @@ public class ScoreBoardTest {
     @Test
     void addEntryTest(){
         sb.addEntry("Bob","5:00");
-        assertEquals("Bob: 5:00", sb.scoreBoard.get(1));
+        assertEquals("Bob: 5:00", sb.scoreBoard.get(0));
     }
 }

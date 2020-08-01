@@ -77,6 +77,7 @@ public class Block extends Box {
      */
     public void gameOver() {
         this.gameOver = true;
+        this.flagged = false;
         this.changeState();
     }
 

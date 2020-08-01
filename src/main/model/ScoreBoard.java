@@ -11,7 +11,6 @@ public class ScoreBoard {
      */
     public ScoreBoard() {
         scoreBoard = new ArrayList<>();
-        scoreBoard.add("SCOREBOARD");
     }
 
     /*

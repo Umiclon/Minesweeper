@@ -81,20 +81,20 @@ public class Minesweeper {
         size = input.nextInt();
         puzzle = new Board(size);
         commandList();
-        puzzle.totalMines = 0;
-        puzzle.totalCovered = 0;
-        puzzle.mines = 0;
+        puzzle.setTotalMines(0);
+        puzzle.setTotalCovered(0);
+        puzzle.setMines(0);
 
         puzzle.fillBoard();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 System.out.print("X ");
-                puzzle.totalCovered++;
+                puzzle.setTotalCovered(puzzle.getTotalCovered() + 1);
             }
             System.out.println(" ");
         }
-        System.out.println("Mines Left: " + puzzle.totalMines);
-        System.out.println("Covered Boxes: " + puzzle.totalCovered + "\n");
+        System.out.println("Mines Left: " + puzzle.getTotalMines());
+        System.out.println("Covered Boxes: " + puzzle.getTotalCovered() + "\n");
         start = System.nanoTime();
     }
 
@@ -122,12 +122,12 @@ public class Minesweeper {
         System.out.println();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                puzzle.board[i][j].gameOver();
+                puzzle.gameOver(i, j);
                 updateBoard(i, j);
             }
             System.out.println(" ");
         }
-        System.out.println("Number of Mines: " + puzzle.totalMines + "\n");
+        System.out.println("Number of Mines: " + puzzle.getMines() + "\n");
     }
 
     /*
@@ -147,7 +147,7 @@ public class Minesweeper {
 
         System.out.println("\nEnter y position: ");
         int y = input.nextInt();
-        System.out.println("\nThe box at " + x + ", " + y + " has been uncovered \n ");
+        System.out.println("\nThe box at " + x + ", " + y + " has been uncovered");
 
         selectBox(x, y);
     }
@@ -157,20 +157,19 @@ public class Minesweeper {
      * EFFECTS: selects a box and uncovers it
      */
     private void selectBox(int x, int y) {
-        if (puzzle.board[y][x].getName().equals("block") && !puzzle.board[y][x].isFlagged()) {
+        if (puzzle.getName(x, y).equals("block") && !puzzle.isFlagged(x, y)) {
             for (int i = y - 1; i < y + 2; i++) {
                 for (int j = x - 1; j < x + 2; j++) {
                     if (i >= 0 && i <= size - 1 && j >= 0 && j <= size - 1
-                            && puzzle.board[i][j].getName().equals("block")
-                            && !puzzle.board[i][j].isFlagged() && puzzle.board[i][j].getState() == 0) {
-                        puzzle.totalCovered--;
-                        puzzle.board[i][j].changeState();
-                        updateBoard(i, j);
+                            && puzzle.getName(i, j).equals("block")
+                            && !puzzle.isFlagged(i, j) && puzzle.getState(i, j) == 0) {
+                        puzzle.setTotalCovered(puzzle.getTotalCovered() - 1);
+                        puzzle.changeState(i, j);
                     }
                 }
-                System.out.println(" ");
+                //System.out.println(" ");
             }
-            System.out.println();
+            //System.out.println();
             if (!checkWinCondition()) {
                 update();
             }
@@ -204,20 +203,20 @@ public class Minesweeper {
      * EFFECTS: flags a box as a potential mine
      */
     private void flagBox(int x, int y) {
-        if (!puzzle.board[y][x].isFlagged()) {
-            if (puzzle.board[y][x].getName().equals("mine")) {
-                puzzle.minesFlagged++;
-                puzzle.totalMines--;
+        if (!puzzle.isFlagged(x, y)) {
+            if (puzzle.getName(x, y).equals("mine")) {
+                puzzle.setMinesFlagged(puzzle.getMinesFlagged() + 1);
+                puzzle.setTotalMines(puzzle.getTotalMines() - 1);
             }
 
         } else {
-            if (puzzle.board[y][x].getName().equals("mine")) {
-                puzzle.minesFlagged--;
-                puzzle.totalMines++;
+            if (puzzle.getName(x, y).equals("mine")) {
+                puzzle.setMinesFlagged(puzzle.getMinesFlagged() - 1);
+                puzzle.setTotalMines(puzzle.getTotalMines() + 1);
             }
 
         }
-        puzzle.board[y][x].flag();
+        puzzle.flag(x, y);
     }
 
     /*
@@ -239,10 +238,10 @@ public class Minesweeper {
             for (int j = 0; j < size; j++) {
                 updateBoard(i, j);
             }
-            System.out.println(" ");
+            System.out.println();
         }
-        System.out.println("Mines Left: " + puzzle.totalMines);
-        System.out.println("Covered Boxes: " + puzzle.totalCovered + "\n");
+        System.out.println("Mines Left: " + puzzle.getTotalMines());
+        System.out.println("Covered Boxes: " + puzzle.getTotalCovered() + "\n");
         commandList();
     }
 
@@ -251,7 +250,7 @@ public class Minesweeper {
      */
     private void updateBoard(int i, int j) {
         //board[i][j].changeState();
-        if (puzzle.board[i][j].getState() == 1 && !puzzle.board[i][j].isFlagged()) {
+        if (puzzle.getState(i, j) == 1) {
             if (i >= 1 && i < size - 1 && j >= 1 && j < size - 1) {
                 updateBox(i, j);
             } else if (j >= 1 && j < size - 1 && i == 0) {
@@ -265,7 +264,7 @@ public class Minesweeper {
             } else {
                 updateCorner(i, j);
             }
-        } else if (puzzle.board[i][j].isFlagged()) {
+        } else if (play && puzzle.isFlagged(i, j)) {
             System.out.print("F ");
         } else {
             System.out.print("X ");
@@ -280,10 +279,10 @@ public class Minesweeper {
      * EFFECTS: helper for the update method
      */
     private void updateBox(int i, int j) {
-        Box[][] a = new Box[][]{{puzzle.board[i - 1][j - 1], puzzle.board[i - 1][j], puzzle.board[i - 1][j + 1]},
-                {puzzle.board[i][j - 1], puzzle.board[i][j], puzzle.board[i][j + 1]},
-                {puzzle.board[i + 1][j - 1], puzzle.board[i + 1][j], puzzle.board[i + 1][j + 1]}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+        Box[][] a = new Box[][]{{puzzle.getBox(i - 1, j - 1), puzzle.getBox(i - 1, j), puzzle.getBox(i - 1, j + 1)},
+                {puzzle.getBox(i, j - 1), puzzle.getBox(i, j), puzzle.getBox(i, j + 1)},
+                {puzzle.getBox(i + 1, j - 1), puzzle.getBox(i + 1, j), puzzle.getBox(i + 1, j + 1)}};
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
@@ -291,39 +290,39 @@ public class Minesweeper {
      */
     private void updateTop(int i, int j) {
         Box[][] a = new Box[][]{{block, block, block},
-                {puzzle.board[i][j - 1], puzzle.board[i][j], puzzle.board[i][j + 1]},
-                {puzzle.board[i + 1][j - 1], puzzle.board[i + 1][j], puzzle.board[i + 1][j + 1]}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+                {puzzle.getBox(i, j - 1), puzzle.getBox(i, j), puzzle.getBox(i, j + 1)},
+                {puzzle.getBox(i + 1, j - 1), puzzle.getBox(i + 1, j), puzzle.getBox(i + 1, j + 1)}};
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
      * EFFECTS: helper for the update method
      */
     private void updateBot(int i, int j) {
-        Box[][] a = new Box[][]{{puzzle.board[i - 1][j - 1], puzzle.board[i - 1][j], puzzle.board[i - 1][j + 1]},
-                {puzzle.board[i][j - 1], puzzle.board[i][j], puzzle.board[i][j + 1]},
+        Box[][] a = new Box[][]{{puzzle.getBox(i - 1, j - 1), puzzle.getBox(i - 1, j), puzzle.getBox(i - 1, j + 1)},
+                {puzzle.getBox(i, j - 1), puzzle.getBox(i, j), puzzle.getBox(i, j + 1)},
                 {block, block, block}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
      * EFFECTS: helper for the update method
      */
     private void updateLeft(int i, int j) {
-        Box[][] a = new Box[][]{{block, puzzle.board[i - 1][j], puzzle.board[i - 1][j + 1]},
-                {block, puzzle.board[i][j], puzzle.board[i][j + 1]},
-                {block, puzzle.board[i + 1][j], puzzle.board[i + 1][j + 1]}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+        Box[][] a = new Box[][]{{block, puzzle.getBox(i - 1, j), puzzle.getBox(i - 1, j + 1)},
+                {block, puzzle.getBox(i, j), puzzle.getBox(i, j + 1)},
+                {block, puzzle.getBox(i + 1, j), puzzle.getBox(i + 1, j + 1)}};
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
      * EFFECTS: helper for the update method
      */
     private void updateRight(int i, int j) {
-        Box[][] a = new Box[][]{{puzzle.board[i - 1][j - 1], puzzle.board[i - 1][j], block},
-                {puzzle.board[i][j - 1], puzzle.board[i][j], block},
-                {puzzle.board[i + 1][j - 1], puzzle.board[i + 1][j], block}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+        Box[][] a = new Box[][]{{puzzle.getBox(i - 1, j - 1), puzzle.getBox(i - 1, j), block},
+                {puzzle.getBox(i, j - 1), puzzle.getBox(i, j), block},
+                {puzzle.getBox(i + 1, j - 1), puzzle.getBox(i + 1, j), block}};
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
@@ -346,9 +345,9 @@ public class Minesweeper {
      */
     private void topLeftCorner(int i, int j) {
         Box[][] a = new Box[][]{{block, block, block},
-                {block, puzzle.board[i][j], puzzle.board[i][j + 1]},
-                {block, puzzle.board[i + 1][j], puzzle.board[i + 1][j + 1]}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+                {block, puzzle.getBox(i, j), puzzle.getBox(i, j + 1)},
+                {block, puzzle.getBox(i + 1, j), puzzle.getBox(i + 1, j + 1)}};
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
@@ -356,36 +355,36 @@ public class Minesweeper {
      */
     private void topRightCorner(int i, int j) {
         Box[][] a = new Box[][]{{block, block, block},
-                {puzzle.board[i][j - 1], puzzle.board[i][j], block},
-                {puzzle.board[i + 1][j - 1], puzzle.board[i + 1][j], block}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+                {puzzle.getBox(i, j - 1), puzzle.getBox(i, j), block},
+                {puzzle.getBox(i + 1, j - 1), puzzle.getBox(i + 1, j), block}};
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
      * EFFECTS: helper for the update method
      */
     private void botLeftCorner(int i, int j) {
-        Box[][] a = new Box[][]{{block, puzzle.board[i - 1][j], puzzle.board[i - 1][j + 1]},
-                {block, puzzle.board[i][j], puzzle.board[i][j + 1]},
+        Box[][] a = new Box[][]{{block, puzzle.getBox(i - 1, j), puzzle.getBox(i - 1, j + 1)},
+                {block, puzzle.getBox(i, j), puzzle.getBox(i, j + 1)},
                 {block, block, block}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
      * EFFECTS: helper for the update method
      */
     private void botRightCorner(int i, int j) {
-        Box[][] a = new Box[][]{{puzzle.board[i - 1][j - 1], puzzle.board[i - 1][j], block},
-                {puzzle.board[i][j - 1], puzzle.board[i][j], block},
+        Box[][] a = new Box[][]{{puzzle.getBox(i - 1, j - 1), puzzle.getBox(i - 1, j), block},
+                {puzzle.getBox(i, j - 1), puzzle.getBox(i, j), block},
                 {block, block, block}};
-        System.out.print(puzzle.board[i][j].numberOfSurroundingMines(a) + " ");
+        System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
     }
 
     /*
      * EFFECTS: checks whether all mines have been discovered
      */
     private boolean checkWinCondition() {
-        if (puzzle.minesFlagged == puzzle.mines | puzzle.totalCovered == puzzle.mines) {
+        if (puzzle.getMinesFlagged() == puzzle.getMines() | puzzle.getTotalCovered() == puzzle.getMines()) {
             winGame();
             return true;
         }
@@ -402,7 +401,7 @@ public class Minesweeper {
         System.out.println("\nEnter your name: \n");
         input = new Scanner(System.in);
         String playerName = input.nextLine();
-        double score = 100 * puzzle.totalMines / size / size;
+        double score = 100 * puzzle.getMines() / size / size;
         sb.addEntry(playerName, Integer.toString((int) score));
         printScoreBoard();
         runMinesweeper();
@@ -413,6 +412,7 @@ public class Minesweeper {
      */
     private void printScoreBoard() {
         System.out.println();
+        System.out.println("SCOREBOARD");
         for (int i = 0; i < sb.scoreBoard.size(); i++) {
             System.out.println(sb.scoreBoard.get(i));
         }
