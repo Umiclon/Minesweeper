@@ -45,6 +45,13 @@ class BoxTest {
         block.gameOver();
         assertEquals(1, block.getState());
 
+        box.setState(0);
+        box.changeState();
+        assertEquals(1,box.getState());
+    }
+
+    @Test
+    void testChangeMineState() {
         mine.setState(0);
         assertEquals(0, mine.getState());
         mine.flag();
@@ -57,10 +64,6 @@ class BoxTest {
         assertEquals(6,mine.getState());
         mine.gameOver();
         assertEquals(6, mine.getState());
-
-        box.setState(0);
-        box.changeState();
-        assertEquals(1,box.getState());
     }
 
     @Test

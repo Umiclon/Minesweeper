@@ -1,4 +1,4 @@
 package src.test.persistence;
 
-public class ReaderTest {
+public class FileLoaderTest {
 }

@@ -1,4 +1,4 @@
 package src.test.persistence;
 
-public class WriterTest {
+public class FileSaverTest {
 }

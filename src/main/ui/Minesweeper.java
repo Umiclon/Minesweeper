@@ -1,22 +1,28 @@
-//NOTE: the methods runMinesweeper and runCommands are based on this repository:
+//NOTE: parts of this project are based on this repository:
 //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
 package src.main.ui;
 
+import com.google.gson.Gson;
 import src.main.model.*;
 import src.main.persistence.*;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
 //represents the minesweeper game
 public class Minesweeper {
+    private static final String ACCOUNTS_FILE = "./data/Board.json";
     private Board puzzle;
-    private final ScoreBoard sb = new ScoreBoard();
+    private ScoreBoard sb;
     private final Box block = new Block();
     private Scanner input;
     private boolean play;
     private int size;
-    private long start;
+//    private long start;
 
     /*
      * EFFECTS: runs the minesweeper game
@@ -29,7 +35,6 @@ public class Minesweeper {
      * EFFECTS: reads and processes user input
      */
     private void runMinesweeper() {
-        Writer.write();
         String command;
         play = true;
         input = new Scanner(System.in);
@@ -40,24 +45,8 @@ public class Minesweeper {
             command = input.next();
             command = command.toLowerCase();
 
-//            switch (command) {
-//                case "start":
-//                    init();
-//                    break;
-//                case "r":
-//                    runMinesweeper();
-//                    break;
-//                case "q":
-//                    play = false;
-//                    quitMenu();
-//                    break;
-//                default:
-//                    runCommands(command);
-//                    break;
-//            }
-
             if (command.equals("start")) {
-                init();
+                start();
             } else if (command.equals("r")) {
                 runMinesweeper();
             } else if (command.equals("q")) {
@@ -93,22 +82,19 @@ public class Minesweeper {
 
         size = input.nextInt();
         puzzle = new Board(size);
+        sb = new ScoreBoard();
         commandList();
-//        puzzle.setTotalMines(0);
-//        puzzle.setTotalCovered(0);
-//        puzzle.setMines(0);
 
         puzzle.fillBoard();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 System.out.print("X ");
-//                puzzle.setTotalCovered(puzzle.getTotalCovered() + 1);
             }
             System.out.println(" ");
         }
         System.out.println("Mines Left: " + puzzle.getTotalMines());
         System.out.println("Covered Boxes: " + puzzle.getTotalCovered() + "\n");
-        start = System.nanoTime();
+        //start = System.nanoTime();
     }
 
     /*
@@ -118,6 +104,36 @@ public class Minesweeper {
         System.out.println("\nWelcome to Minesweeper 2020 \n" + "\nType 'start' to begin \n");
     }
 
+    private void start() {
+        System.out.println("\nDo you want to load a previous game(y/n)? ");
+        String ans = input.next();
+        if (ans.equals("y")) {
+            loadGame();
+        } else {
+            init();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads Board puzzle and ScoreBoard sb from GAME_FILE, if that file exists;
+    // otherwise calls init()
+    private void loadGame() {
+        try {
+            Gson gson = new Gson();
+            Reader reader1 = Files.newBufferedReader(Paths.get("./data/Board.json"));
+            Reader reader2 = Files.newBufferedReader(Paths.get("./data/Board.json"));
+            puzzle = gson.fromJson(reader1, Board.class);
+            size = puzzle.getBoard().length;
+            sb = gson.fromJson(reader2, ScoreBoard.class);
+            update();
+
+            reader1.close();
+            reader2.close();
+        } catch (Exception e) {
+            System.out.println("No Saved Game \n");
+            init();
+        }
+    }
 
     /*
      * EFFECTS: runs the gameOver menu and resets the game
@@ -147,7 +163,21 @@ public class Minesweeper {
      * EFFECTS: displays quit game message
      */
     private void quitMenu() {
+        saveGame();
         System.out.println("\nThank You For Playing \n" + "\nBye!");
+    }
+
+    /*
+     * EFFECTS: saves Board puzzle and ScoreBoard sb to GAME_FILE
+     */
+    private void saveGame() {
+        try {
+            FileSaver.write(puzzle, sb);
+            System.out.println("Game Saved: " + ACCOUNTS_FILE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // this is due to a programming error
+        }
     }
 
     /*
@@ -180,9 +210,7 @@ public class Minesweeper {
                         puzzle.changeState(i, j);
                     }
                 }
-                //System.out.println(" ");
             }
-            //System.out.println();
             if (!checkWinCondition()) {
                 update();
             }
@@ -260,10 +288,50 @@ public class Minesweeper {
     }
 
     /*
+     * EFFECTS: checks whether all mines have been discovered
+     */
+    private boolean checkWinCondition() {
+        if (puzzle.getMinesFlagged() == puzzle.getMines() | puzzle.getTotalCovered() == puzzle.getMines()) {
+            winGame();
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * MODIFIES: ScoreBoard
+     * EFFECTS: runs the winGame menu and adds name and score to scoreboard
+     */
+    private void winGame() {
+        printBoardSolution();
+        System.out.println("CONGRATULATIONS YOU WON! \n");
+        System.out.println("\nEnter your name: \n");
+        input = new Scanner(System.in);
+        String playerName = input.nextLine();
+        double score = 100 * puzzle.getMines() / size / size;
+        sb.addEntry(playerName, Integer.toString((int) score));
+        printScoreBoard();
+        runMinesweeper();
+    }
+
+    /*
+     * EFFECTS: prints out the scoreBoard
+     */
+    private void printScoreBoard() {
+        System.out.println();
+        System.out.println("SCOREBOARD");
+        for (int i = 0; i < sb.getScoreBoard().size(); i++) {
+            System.out.println(sb.getScoreBoard().get(i));
+        }
+//        long end = System.nanoTime();
+//        long time = (end - start) / 1000000000;
+//        System.out.println(time);
+    }
+
+    /*
      * EFFECTS: helper for the update method
      */
     private void updateBoard(int i, int j) {
-        //board[i][j].changeState();
         if (puzzle.getState(i, j) == 1) {
             if (i >= 1 && i < size - 1 && j >= 1 && j < size - 1) {
                 updateBox(i, j);
@@ -282,10 +350,6 @@ public class Minesweeper {
             System.out.print("F ");
         } else {
             System.out.print("X ");
-//            totalCovered++;
-//            if (board[i][j].getName().equals("mine")) {
-//                totalMines++;
-//            }
         }
     }
 
@@ -392,46 +456,5 @@ public class Minesweeper {
                 {puzzle.getBox(i, j - 1), puzzle.getBox(i, j), block},
                 {block, block, block}};
         System.out.print(puzzle.numberOfSurroundingMines(i, j, a) + " ");
-    }
-
-    /*
-     * EFFECTS: checks whether all mines have been discovered
-     */
-    private boolean checkWinCondition() {
-        if (puzzle.getMinesFlagged() == puzzle.getMines() | puzzle.getTotalCovered() == puzzle.getMines()) {
-            winGame();
-            return true;
-        }
-        return false;
-    }
-
-    /*
-     * MODIFIES: ScoreBoard
-     * EFFECTS: runs the winGame menu and adds name and score to scoreboard
-     */
-    private void winGame() {
-        printBoardSolution();
-        System.out.println("CONGRATULATIONS YOU WON! \n");
-        System.out.println("\nEnter your name: \n");
-        input = new Scanner(System.in);
-        String playerName = input.nextLine();
-        double score = 100 * puzzle.getMines() / size / size;
-        sb.addEntry(playerName, Integer.toString((int) score));
-        printScoreBoard();
-        runMinesweeper();
-    }
-
-    /*
-     * EFFECTS: prints out the scoreBoard
-     */
-    private void printScoreBoard() {
-        System.out.println();
-        System.out.println("SCOREBOARD");
-        for (int i = 0; i < sb.scoreBoard.size(); i++) {
-            System.out.println(sb.scoreBoard.get(i));
-        }
-        long end = System.nanoTime();
-        long time = (end - start) / 1000000000;
-        //System.out.println(time);
     }
 }
