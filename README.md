@@ -27,8 +27,8 @@
     - *add a name and score to the scoreboard*
     
  - Phase 2: Data Persistence
-    - *have the option to save when quitting the game*
     - *have the option to load when starting the game*   
+    - *save the game when quitting*
     
  - Phase 3: Graphical User Interface
     - * *
