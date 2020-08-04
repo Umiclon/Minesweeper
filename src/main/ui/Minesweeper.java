@@ -204,7 +204,7 @@ public class Minesweeper {
      * EFFECTS: selects a box and uncovers it
      */
     private void selectBox(int x, int y) {
-        if (puzzle.getName(x, y).equals("block") && !puzzle.isFlagged(x, y)) {
+        if (puzzle.getName(y, x).equals("block") && !puzzle.isFlagged(y, x)) {
             for (int i = y - 1; i < y + 2; i++) {
                 for (int j = x - 1; j < x + 2; j++) {
                     if (i >= 0 && i <= size - 1 && j >= 0 && j <= size - 1
@@ -248,21 +248,19 @@ public class Minesweeper {
      * EFFECTS: flags a box as a potential mine
      */
     private void flagBox(int x, int y) {
-        if (!puzzle.isFlagged(x, y)) {
-            if (puzzle.getName(x, y).equals("mine")) {
+        if (!puzzle.isFlagged(y, x)) {
+            if (puzzle.getName(y, x).equals("mine")) {
                 puzzle.setMinesFlagged(puzzle.getMinesFlagged() + 1);
-                puzzle.setTotalMines(puzzle.getTotalMines() - 1);
             }
-
+            puzzle.setTotalMines(puzzle.getTotalMines() - 1);
         } else {
-            if (puzzle.getName(x, y).equals("mine")) {
+            if (puzzle.getName(y, x).equals("mine")) {
                 puzzle.setMinesFlagged(puzzle.getMinesFlagged() - 1);
-                puzzle.setTotalMines(puzzle.getTotalMines() + 1);
             }
-
+            puzzle.setTotalMines(puzzle.getTotalMines() + 1);
         }
-        puzzle.flag(x, y);
-        puzzle.changeState(x, y);
+        puzzle.flag(y, x);
+        puzzle.changeState(y, x);
     }
 
     /*
