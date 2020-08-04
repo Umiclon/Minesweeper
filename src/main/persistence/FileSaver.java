@@ -1,11 +1,11 @@
 //NOTE: code from this website:
 //https://attacomsian.com/blog/gson-read-write-json
 
-package src.main.persistence;
+package persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import src.main.model.*;
+import model.*;
 
 import java.io.*;
 import java.nio.file.Files;

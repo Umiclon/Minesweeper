@@ -1,7 +1,7 @@
-package src.test.persistence;
+package persistence;
 
-import src.main.model.*;
-import src.main.persistence.*;
+import model.*;
+import persistence.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

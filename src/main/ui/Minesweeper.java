@@ -1,11 +1,11 @@
 //NOTE: parts of this project are based on this repository:
 //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
-package src.main.ui;
+package ui;
 
 import com.google.gson.Gson;
-import src.main.model.*;
-import src.main.persistence.*;
+import model.*;
+import persistence.*;
 
 import java.io.*;
 import java.nio.file.Files;

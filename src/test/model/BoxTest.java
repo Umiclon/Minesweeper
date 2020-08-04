@@ -1,6 +1,5 @@
-package src.test.model;
+package model;
 
-import src.main.model.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

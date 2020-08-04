@@ -1,11 +1,10 @@
 //NOTE: code from this website:
 //https://attacomsian.com/blog/gson-read-write-json
 
-package src.main.persistence;
+package persistence;
 
 import com.google.gson.Gson;
-import src.main.model.Board;
-import src.main.model.ScoreBoard;
+import model.*;
 
 import java.io.IOException;
 import java.io.Reader;

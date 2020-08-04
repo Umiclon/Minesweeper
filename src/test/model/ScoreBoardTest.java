@@ -1,6 +1,4 @@
-package src.test.model;
-
-import src.main.model.*;
+package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 

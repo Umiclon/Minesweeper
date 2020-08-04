@@ -1,4 +1,4 @@
-package src.main.model;
+package model;
 
 // represents a mine block in a box on the game board
 // mines will explode and end the game when uncovered

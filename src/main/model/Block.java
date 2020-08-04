@@ -1,4 +1,4 @@
-package src.main.model;
+package model;
 
 // represents a block object in a box on the game board
 // blocks will indicate the number of mines around it when uncovered
