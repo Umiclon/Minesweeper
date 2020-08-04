@@ -10,12 +10,12 @@ import src.main.persistence.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 //represents the minesweeper game
 public class Minesweeper {
-    private static final String ACCOUNTS_FILE = "./data/Board.json";
     private Board puzzle;
     private ScoreBoard sb;
     private final Box block = new Block();
@@ -46,7 +46,11 @@ public class Minesweeper {
             command = command.toLowerCase();
 
             if (command.equals("start")) {
-                start();
+                if (puzzle == null) {
+                    start();
+                } else {
+                    init();
+                }
             } else if (command.equals("r")) {
                 runMinesweeper();
             } else if (command.equals("q")) {
@@ -82,7 +86,6 @@ public class Minesweeper {
 
         size = input.nextInt();
         puzzle = new Board(size);
-        sb = new ScoreBoard();
         commandList();
 
         puzzle.fillBoard();
@@ -112,6 +115,11 @@ public class Minesweeper {
         } else {
             init();
         }
+        try {
+            sb = FileLoader.readScoreBoard("./data/ScoreBoard.json");
+        } catch (Exception e) {
+            System.out.println("ScoreBoard Loading Error \n");
+        }
     }
 
     // MODIFIES: this
@@ -119,16 +127,10 @@ public class Minesweeper {
     // otherwise calls init()
     private void loadGame() {
         try {
-            Gson gson = new Gson();
-            Reader reader1 = Files.newBufferedReader(Paths.get("./data/Board.json"));
-            Reader reader2 = Files.newBufferedReader(Paths.get("./data/Board.json"));
-            puzzle = gson.fromJson(reader1, Board.class);
+            puzzle = FileLoader.readBoard("./data/Board.json");
             size = puzzle.getBoard().length;
-            sb = gson.fromJson(reader2, ScoreBoard.class);
+            sb = FileLoader.readScoreBoard("./data/ScoreBoard.json");
             update();
-
-            reader1.close();
-            reader2.close();
         } catch (Exception e) {
             System.out.println("No Saved Game \n");
             init();
@@ -173,7 +175,9 @@ public class Minesweeper {
     private void saveGame() {
         try {
             FileSaver.write(puzzle, sb);
-            System.out.println("Game Saved: " + ACCOUNTS_FILE);
+            System.out.println("Game Saved");
+            Date d = new Date();
+            System.out.print(d.toString());
         } catch (Exception e) {
             e.printStackTrace();
             // this is due to a programming error
@@ -309,6 +313,9 @@ public class Minesweeper {
         input = new Scanner(System.in);
         String playerName = input.nextLine();
         double score = 100 * puzzle.getMines() / size / size;
+        if (sb == null) {
+            sb = new ScoreBoard();
+        }
         sb.addEntry(playerName, Integer.toString((int) score));
         printScoreBoard();
         runMinesweeper();

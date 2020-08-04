@@ -130,7 +130,7 @@ public class Board {
      * EFFECTS: returns the number of mines in a 3x3 area on the board
      */
     public int numberOfSurroundingMines(int i, int j, Box[][] board) {
-        return board[i][j].numberOfSurroundingMines(board);
+        return this.board[i][j].numberOfSurroundingMines(board);
     }
 
     /*

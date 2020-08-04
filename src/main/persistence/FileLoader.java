@@ -1,38 +1,35 @@
-package src.main.persistence;
+//NOTE: code from this website:
+//https://attacomsian.com/blog/gson-read-write-json
 
+package src.main.persistence;
 
 import com.google.gson.Gson;
 import src.main.model.Board;
-import src.main.ui.Minesweeper;
+import src.main.model.ScoreBoard;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+//loads the object from the json file
 public class FileLoader {
 
-    public static Board read() {
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
+    // EFFECTS: reads the Board object from the corresponding json file
+    public static Board readBoard(String path) throws IOException {
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get(path));
+        Board b = gson.fromJson(reader, Board.class);
+        reader.close();
+        return b;
+    }
 
-            // create a reader
-            Reader reader = Files.newBufferedReader(Paths.get("./data/Board.json"));
-
-            // convert JSON string to Book object
-            Board b = gson.fromJson(reader, Board.class);
-
-            // print book
-            System.out.println(b);
-
-            // close reader
-            reader.close();
-
-            return b;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return new Board(4);
+    // EFFECTS: reads the ScoreBoard object from the corresponding json file
+    public static ScoreBoard readScoreBoard(String path) throws IOException {
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get(path));
+        ScoreBoard sb = gson.fromJson(reader, ScoreBoard.class);
+        reader.close();
+        return sb;
     }
 }

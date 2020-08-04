@@ -1,0 +1,36 @@
+{
+  "board": [
+    [
+      {
+        "state": 0,
+        "flagged": false,
+        "gameOver": false,
+        "name": "block"
+      },
+      {
+        "state": 0,
+        "flagged": false,
+        "gameOver": false,
+        "name": "mine"
+      }
+    ],
+    [
+      {
+        "state": 0,
+        "flagged": false,
+        "gameOver": false,
+        "name": "block"
+      },
+      {
+        "state": 0,
+        "flagged": false,
+        "gameOver": false,
+        "name": "block"
+      }
+    ]
+  ],
+  "totalMines": 1,
+  "totalCovered": 4,
+  "minesFlagged": 0,
+  "mines": 1
+}
