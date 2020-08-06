@@ -15,20 +15,27 @@ import java.nio.file.Paths;
 public class FileSaver {
 
     // EFFECTS: writes the objects to the corresponding json file
-    public static void write(Board b, ScoreBoard sb) {
-        try {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Writer writer1 = Files.newBufferedWriter(Paths.get("./data/Board.json"));
-            Writer writer2 = Files.newBufferedWriter(Paths.get("./data/ScoreBoard.json"));
+    public static void writeBoard(Board b, String path) throws IOException {
 
-            gson.toJson(b, writer1);
-            gson.toJson(sb, writer2);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-            writer1.close();
-            writer2.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        Writer writer1 = Files.newBufferedWriter(Paths.get(path));
+
+        gson.toJson(b, writer1);
+
+        writer1.close();
+    }
+
+    // EFFECTS: writes the objects to the corresponding json file
+    public static void writeScoreBoard(ScoreBoard sb, String path) throws IOException {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        Writer writer2 = Files.newBufferedWriter(Paths.get("./data/ScoreBoard.json"));
+
+        gson.toJson(sb, writer2);
+
+        writer2.close();
     }
 }
 

@@ -53,12 +53,12 @@ class BoardTest {
     void testFlag() {
         board.setBox(1, 1, new Block());
         board.flag(1, 1);
-        board.changeState(1,1);
+        board.changeState(1, 1);
         assertTrue(board.isFlagged(1, 1));
         assertEquals(2, board.getState(1, 1));
         board.setBox(1, 1, new Mine());
         board.flag(1, 1);
-        board.changeState(1,1);
+        board.changeState(1, 1);
         assertTrue(board.isFlagged(1, 1));
         assertEquals(7, board.getState(1, 1));
     }
@@ -82,6 +82,57 @@ class BoardTest {
             assertEquals(6, board.getState(1, 1));
         } else if (board.getName(1, 1).equals("Block")) {
             assertEquals(1, board.getState(1, 1));
+        }
+    }
+
+    @Test
+    void testUpdateBoard() {
+        for (int i = 0; i < board.getBoard().length; i++) {
+            for (int j = 0; j < board.getBoard().length; j++) {
+                board.changeState(i, j);
+                board.updateBoard(i, j);
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < board.getBoard().length; i++) {
+            for (int j = 0; j < board.getBoard().length; j++) {
+                if (board.getName(i, j).equals("mine")) {
+                    assertEquals(6, board.getState(i, j));
+                } else {
+                    assertEquals(1, board.getState(i, j));
+                }
+            }
+        }
+    }
+
+    @Test
+    void testOther() {
+        board.flag(1,1);
+        board.changeState(1,1);
+        board.updateBoard(1,1);
+        if (board.getName(1, 1).equals("mine")) {
+            assertEquals(7, board.getState(1, 1));
+        } else {
+            assertEquals(2, board.getState(1, 1));
+        }
+        board.flag(1,1);
+        board.changeState(1,1);
+
+        board.changeState(0, 1);
+        board.updateBoard(0, 1);
+        if (board.getName(0, 1).equals("mine")) {
+            assertEquals(6, board.getState(0, 1));
+        } else {
+            assertEquals(1, board.getState(0, 1));
+        }
+
+        board.changeState(2, 1);
+        board.updateBoard(2, 1);
+        if (board.getName(2, 1).equals("mine")) {
+            assertEquals(6, board.getState(2, 1));
+        } else {
+            assertEquals(1, board.getState(2, 1));
         }
     }
 

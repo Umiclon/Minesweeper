@@ -1,9 +1,5 @@
 package model;
 
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-
 //represents a box object on a board
 //the box can either be a block or a mine
 public class Box {
@@ -36,7 +32,7 @@ public class Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: changes the box state depending on flagged and gameOver
+     * EFFECTS: changes the box state
      */
     public void changeState() {
         this.state = 1;
@@ -52,7 +48,7 @@ public class Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: switches flagged from false to true and vice versa and updates the state
+     * EFFECTS: switches flagged from false to true and vice versa
      */
     public void flag() {
         this.flagged = !flagged;
@@ -60,10 +56,11 @@ public class Box {
 
     /*
      * MODIFIES: this
-     * EFFECTS: sets gameOver to true and updates the state
+     * EFFECTS: sets gameOver to true and flagged to false
      */
     public void gameOver() {
         this.gameOver = true;
+        this.flagged = false;
     }
 
     public boolean isFlagged() {

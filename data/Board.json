@@ -18,33 +18,9 @@
         "flagged": false,
         "gameOver": false,
         "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
       }
     ],
     [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
       {
         "state": 0,
         "flagged": false,
@@ -76,82 +52,6 @@
         "flagged": false,
         "gameOver": false,
         "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      }
-    ],
-    [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      }
-    ],
-    [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
       },
       {
         "state": 0,
@@ -161,8 +61,14 @@
       }
     ]
   ],
-  "totalMines": 6,
-  "totalCovered": 25,
+  "totalMines": 2,
+  "totalCovered": 9,
   "minesFlagged": 0,
-  "mines": 6
+  "mines": 2,
+  "block": {
+    "state": 0,
+    "flagged": false,
+    "gameOver": false,
+    "name": "block"
+  }
 }
