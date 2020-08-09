@@ -1,16 +1,19 @@
-//NOTE: parts of this project are based on this repository:
-//https://github.students.cs.ubc.ca/CPSC210/TellerApp
+//NOTE: based on: https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
 package ui;
 
-import model.*;
-import persistence.*;
+import model.Block;
+import model.Board;
+import model.Box;
+import model.ScoreBoard;
+import persistence.FileLoader;
+import persistence.FileSaver;
 
 import java.util.Date;
 import java.util.Scanner;
 
 //represents the minesweeper game
-public class Minesweeper {
+public class MinesweeperConsole {
     private Board board;
     private ScoreBoard sb;
     private final Box block = new Block();
@@ -22,7 +25,7 @@ public class Minesweeper {
     /*
      * EFFECTS: runs the minesweeper game
      */
-    public Minesweeper() {
+    public MinesweeperConsole() {
         runMinesweeper();
     }
 
@@ -148,6 +151,9 @@ public class Minesweeper {
         System.out.println();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
+                if (board.getName(i, j).equals("block")) {
+                    board.changeState(i, j);
+                }
                 board.gameOver(i, j);
                 board.updateBoard(i, j);
             }

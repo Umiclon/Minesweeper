@@ -1,8 +1,9 @@
 package model;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 // tests for box, block, and mine
 class BoxTest {

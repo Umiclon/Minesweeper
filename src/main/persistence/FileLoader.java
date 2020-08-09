@@ -4,7 +4,8 @@
 package persistence;
 
 import com.google.gson.Gson;
-import model.*;
+import model.Board;
+import model.ScoreBoard;
 
 import java.io.IOException;
 import java.io.Reader;

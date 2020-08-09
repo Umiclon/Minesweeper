@@ -20,24 +20,18 @@
 
 *As a user, I want to be able to...*
 
- - Phase 1: Basic Model and User Interaction
-    - *reveal a box on the board*
-    - *flag and un-flag a box on the board*
-    - *choose the size of the board*
-    - *add a name and score to the scoreboard*
+  - *reveal a box on the board*
+  - *flag and un-flag a box on the board*
+  - *choose the size of the board*
+  - *add a name and score to the scoreboard*
     
- - Phase 2: Data Persistence
-    - *have the option to load when starting the game*   
-    - *save the game when quitting*
+  - *have the option to load when starting the game*   
+  - *save the game when quitting*
     
- - Phase 3: Graphical User Interface
-    - * *
-    - * *
-    - * *
-    - * *
     
- - Phase 4: Design
-    - * *
-    - * *
-    - * *
-    - * *
+ ## Instructions for Grader
+  - *You can generate the first required event by...*
+  - *You can generate the second required event by...*
+  - *You can trigger my audio component by...*
+  - *You can save the state of my application by...*
+  - *You can load the state of my application by...*

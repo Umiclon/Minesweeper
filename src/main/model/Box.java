@@ -35,7 +35,15 @@ public class Box {
      * EFFECTS: changes the box state
      */
     public void changeState() {
-        this.state = 1;
+        if (this.gameOver) {
+            this.state = Block.UNCOVERED_BLOCK;
+        } else if (this.state == Block.COVERED_BLOCK && isFlagged()) {
+            this.state = Block.FLAGGED_BLOCK;
+        } else if (this.state == Block.FLAGGED_BLOCK && !isFlagged()) {
+            this.state = Block.COVERED_BLOCK;
+        } else {
+            this.state = Block.UNCOVERED_BLOCK;
+        }
     }
 
     /*
@@ -43,7 +51,16 @@ public class Box {
      * EFFECTS: returns the number of mines in a 3x3 area on the board
      */
     public int numberOfSurroundingMines(Box[][] board) {
-        return 0;
+        int sum = 0;
+
+        for (int i = 0; i < board[0].length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j].getName().equals("mine")) {
+                    sum++;
+                }
+            }
+        }
+        return sum;
     }
 
     /*

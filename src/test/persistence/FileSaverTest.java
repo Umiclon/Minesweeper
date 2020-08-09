@@ -1,16 +1,15 @@
 package persistence;
 
+import model.Board;
+import model.ScoreBoard;
 import org.junit.jupiter.api.Test;
-import model.*;
-import persistence.*;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+//test for the FileSaver class
 public class FileSaverTest {
 
     @Test

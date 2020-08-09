@@ -1,15 +1,15 @@
 package model;
 
-import ui.Minesweeper;
+import ui.MinesweeperConsole;
 
 //represents a game board with boxes that are either blocks or mines
 public class Board {
     private Box[][] board;
-    private static final double DIFFICULTY = 0.25;
-    private static final int DIMENSION_X = 500;
-    private static final int DIMENSION_Y = 500;
-    private static final int BOX_X = 5;
-    private static final int BOX_Y = 5;
+    public static final double DIFFICULTY = 0.25;
+    public static final int WIDTH = 1500;
+    public static final int HEIGHT = 1500;
+    public static final int BOX_X = 5;
+    public static final int BOX_Y = 5;
     private int totalMines;
     private int totalCovered;
     private int minesFlagged;
@@ -159,9 +159,9 @@ public class Board {
                 this.updateCorner(i, j);
             }
         } else if (this.isFlagged(i, j)) {
-            Minesweeper.printFlag();
+            MinesweeperConsole.printFlag();
         } else {
-            Minesweeper.printCoveredBox();
+            MinesweeperConsole.printCoveredBox();
         }
     }
 
@@ -172,7 +172,7 @@ public class Board {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {this.getBox(i, j - 1), this.getBox(i, j), this.getBox(i, j + 1)},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -182,7 +182,7 @@ public class Board {
         Box[][] a = new Box[][]{{block, block, block},
                 {this.getBox(i, j - 1), this.getBox(i, j), this.getBox(i, j + 1)},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -192,7 +192,7 @@ public class Board {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {this.getBox(i, j - 1), this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, block, block}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -202,7 +202,7 @@ public class Board {
         Box[][] a = new Box[][]{{block, this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {block, this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -212,7 +212,7 @@ public class Board {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), block},
                 {this.getBox(i, j - 1), this.getBox(i, j), block},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), block}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -237,7 +237,7 @@ public class Board {
         Box[][] a = new Box[][]{{block, block, block},
                 {block, this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -247,7 +247,7 @@ public class Board {
         Box[][] a = new Box[][]{{block, block, block},
                 {this.getBox(i, j - 1), this.getBox(i, j), block},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), block}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -257,7 +257,7 @@ public class Board {
         Box[][] a = new Box[][]{{block, this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {block, this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, block, block}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
@@ -267,7 +267,7 @@ public class Board {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), block},
                 {this.getBox(i, j - 1), this.getBox(i, j), block},
                 {block, block, block}};
-        Minesweeper.printBox(this.numberOfSurroundingMines(i, j, a));
+        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
     }
 
 }

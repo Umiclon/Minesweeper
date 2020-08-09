@@ -4,9 +4,9 @@ package model;
 // mines will explode and end the game when uncovered
 // flagged mines cannot be uncovered unless un-flagged
 public class Mine extends Box {
-    private static final int COVERED_MINE = 0;
-    private static final int UNCOVERED_MINE = 6;
-    private static final int FLAGGED_MINE = 7;
+    public static final int COVERED_MINE = 0;
+    public static final int UNCOVERED_MINE = 6;
+    public static final int FLAGGED_MINE = 7;
 
     /*
      * EFFECTS: creates a mine object with int state COVERED_MINE, booleans flagged and gameOver false, and string name
@@ -24,7 +24,7 @@ public class Mine extends Box {
      */
     @Override
     public void changeState() {
-        if (super.isGameOver()) {
+        if (this.gameOver) {
             this.state = UNCOVERED_MINE;
         } else if (this.state == COVERED_MINE && isFlagged()) {
             this.state = FLAGGED_MINE;

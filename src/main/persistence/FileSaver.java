@@ -5,9 +5,11 @@ package persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.*;
+import model.Board;
+import model.ScoreBoard;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
