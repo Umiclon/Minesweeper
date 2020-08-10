@@ -1,4 +1,4 @@
-////NOTE: based on: https://github.students.cs.ubc.ca/CPSC210/TellerApp
+////Credits: https://github.students.cs.ubc.ca/CPSC210/TellerApp
 //
 //package ui;
 //

@@ -1,5 +1,5 @@
-// NOTE: based on https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase ,
-// https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete , and
+// Credits: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+// https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete
 // https://codereview.stackexchange.com/questions/215081/minesweeper-game-in-java-using-swing-gui
 
 package ui;
@@ -11,7 +11,11 @@ import persistence.FileSaver;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.Box;
 
@@ -29,6 +33,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     private JButton load;
     private ScorePanel sp;
     private CounterPanel cp;
+    public static Icon mineIcon;
+    public static Icon flagIcon;
 
     // EFFECTS:  sets size and background colour of panel,
     //           updates this with the game to be displayed
@@ -40,6 +46,19 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         this.cp = cp;
         init();
         drawGrid();
+
+        try {
+            Image scaledMine = ImageIO.read(new File("data/mineIcon.jpg"));
+            scaledMine = scaledMine.getScaledInstance(Board.WIDTH / board.getBoard().length,
+                    Board.HEIGHT / board.getBoard().length, Image.SCALE_SMOOTH);
+            mineIcon = new ImageIcon(scaledMine);
+            Image scaledFlag = ImageIO.read(new File("data/flagIcon.png"));
+            scaledFlag = scaledFlag.getScaledInstance(Board.WIDTH / board.getBoard().length,
+                    Board.HEIGHT / board.getBoard().length, Image.SCALE_SMOOTH);
+            flagIcon = new ImageIcon(scaledFlag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void init() {
@@ -94,7 +113,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         JButton b = (JButton) e.getSource();
         if (!b.getText().equals("F") && e.getButton() == MouseEvent.BUTTON3) {
             b.setForeground(Color.RED);
-            b.setText("F");
+            b.setIcon(flagIcon);
             board.setTotalMines(board.getTotalMines() - 1);
             cp.updateCounters();
         } else if (b.getText().equals("F") && e.getButton() == MouseEvent.BUTTON3) {
@@ -175,6 +194,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
             for (int j = 0; j < board.getBoard().length; j++) {
                 buttons[i][j].setText("");
                 buttons[i][j].setEnabled(true);
+                buttons[i][j].setIcon(null);
+
             }
         }
         cp = new CounterPanel(board);
@@ -219,10 +240,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
                 switch (board.getName(x, y)) {
                     case "mine":
                         buttons[x][y].setForeground(Color.RED);
-                        buttons[x][y].setText("X ");
+                        buttons[x][y].setIcon(mineIcon);
                         break;
                     default:
                         buttons[x][y].setText((board.updateBoard(x, y)));
+                        buttons[x][y].setIcon(null);
                         buttons[x][y].setEnabled(false);
                         break;
                 }

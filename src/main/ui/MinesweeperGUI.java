@@ -1,5 +1,5 @@
-// NOTE: based on https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase ,
-// https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete , and
+// Credits:  https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+// https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete
 // https://codereview.stackexchange.com/questions/215081/minesweeper-game-in-java-using-swing-gui
 
 package ui;

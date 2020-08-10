@@ -1,4 +1,4 @@
-// NOTE: based on https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+// Credits: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
 
 package ui;
 
