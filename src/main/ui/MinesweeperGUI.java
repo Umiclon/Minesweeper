@@ -30,6 +30,16 @@ public class MinesweeperGUI extends JFrame {
         pack();
         centreOnScreen();
         setVisible(true);
+        while (true) {
+            if (true) {
+                JTextArea name = new JTextArea();
+                //add(name);
+                if (!name.getText().equals("")) {
+                    //sp.addEntry(name.getText());
+                }
+                break;
+            }
+        }
     }
 
     // MODIFIES: this
@@ -37,8 +47,8 @@ public class MinesweeperGUI extends JFrame {
     private void init() {
         board = new Board(10);
         sp = new ScorePanel(board);
-        gp = new GamePanel(board);
         cp = new CounterPanel(board);
+        gp = new GamePanel(board, sp, cp);
         add(sp, BorderLayout.NORTH);
         add(gp);
         add(cp, BorderLayout.SOUTH);
@@ -48,7 +58,7 @@ public class MinesweeperGUI extends JFrame {
     // EFFECTS:  location of frame is set so frame is centred on desktop
     private void centreOnScreen() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
+        setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2 - 50);
     }
 
     // EFFECTS: reads key input

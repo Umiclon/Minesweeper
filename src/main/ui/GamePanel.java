@@ -10,15 +10,14 @@ import persistence.FileLoader;
 import persistence.FileSaver;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.Box;
 
 //the panel in which the game is rendered.
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener, MouseListener {
     private Board board;
     private JButton[][] buttons;
     private Container grid;
@@ -27,13 +26,18 @@ public class GamePanel extends JPanel implements ActionListener {
     private JPanel optionPanel;
     private JButton reset;
     private JButton save;
+    private JButton load;
+    private ScorePanel sp;
+    private CounterPanel cp;
 
     // EFFECTS:  sets size and background colour of panel,
     //           updates this with the game to be displayed
-    public GamePanel(Board b) {
-        setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT));
+    public GamePanel(Board b, ScorePanel sp, CounterPanel cp) {
+        setPreferredSize(new Dimension(Board.WIDTH + 000, Board.HEIGHT + 100));
         setBackground(Color.GRAY);
         this.board = b;
+        this.sp = sp;
+        this.cp = cp;
         init();
         drawGrid();
     }
@@ -43,12 +47,22 @@ public class GamePanel extends JPanel implements ActionListener {
 
         reset = new JButton("Reset");
         save = new JButton("Save");
+        load = new JButton("Load");
+
+        reset.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 3, ScorePanel.LBL_HEIGHT / 2));
+        save.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 3, ScorePanel.LBL_HEIGHT / 2));
+        load.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 3, ScorePanel.LBL_HEIGHT / 2));
+        reset.setFont(new Font("Arial", Font.PLAIN, Board.WIDTH / board.getBoard().length / 3));
+        save.setFont(new Font("Arial", Font.PLAIN, Board.WIDTH / board.getBoard().length / 3));
+        load.setFont(new Font("Arial", Font.PLAIN, Board.WIDTH / board.getBoard().length / 3));
 
         reset.addActionListener(this);
         save.addActionListener(this);
+        load.addActionListener(this);
 
         optionPanel.add(reset);
         optionPanel.add(save);
+        optionPanel.add(load);
         add(optionPanel, BorderLayout.SOUTH);
     }
 
@@ -62,6 +76,7 @@ public class GamePanel extends JPanel implements ActionListener {
             for (int j = 0; j < board.getBoard().length; j++) {
                 buttons[i][j] = new JButton();
                 buttons[i][j].addActionListener(this);
+                buttons[i][j].addMouseListener(this);
                 buttons[i][j].setPreferredSize(new Dimension(Board.WIDTH / board.getBoard().length,
                         Board.HEIGHT / board.getBoard().length));
                 buttons[i][j].setFont(new Font("Arial", Font.PLAIN,
@@ -72,20 +87,48 @@ public class GamePanel extends JPanel implements ActionListener {
         add(grid);
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: deals with right-click events
+    public void mousePressed(MouseEvent e) {
+        JButton b = (JButton) e.getSource();
+        if (!b.getText().equals("F") && e.getButton() == MouseEvent.BUTTON3) {
+            b.setForeground(Color.RED);
+            b.setText("F");
+            board.setTotalMines(board.getTotalMines() - 1);
+            cp.updateCounters();
+        } else if (b.getText().equals("F") && e.getButton() == MouseEvent.BUTTON3) {
+            b.setText("");
+            board.setTotalMines(board.getTotalMines() + 1);
+            cp.updateCounters();
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: deals with actions related to buttons being clicked
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (reset.equals(e.getSource())) {
-            board = new Board(10);
-            for (int i = 0; i < board.getBoard().length; i++) {
-                for (int j = 0; j < board.getBoard().length; j++) {
-                    buttons[i][j].setText("");
-                    buttons[i][j].setEnabled(true);
-                }
-            }
-        } else if (save.equals(e.getSource())) {
-            saveGame();
-            //ScorePanel.saveScores();
-        }
+        optionSelected(e);
 
         for (int x = 0; x < buttons.length; x++) {
             for (int y = 0; y < buttons.length; y++) {
@@ -95,6 +138,11 @@ public class GamePanel extends JPanel implements ActionListener {
                             printBoardSolution();
                             break;
                         default:
+                            if (checkWinCondition()) {
+                                winGame();
+                            }
+                            board.setTotalCovered(board.getTotalCovered() - 1);
+                            cp.updateCounters();
                             board.changeState(x, y);
                             buttons[x][y].setText((board.updateBoard(x, y)));
                             buttons[x][y].setEnabled(false);
@@ -106,7 +154,35 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads Board puzzle and ScoreBoard sb from GAME_FILE, if that file exists;
+    // EFFECTS: deals with option buttons being clicked
+    public void optionSelected(ActionEvent e) {
+        if (reset.equals(e.getSource())) {
+            reset();
+        } else if (save.equals(e.getSource())) {
+            saveGame();
+            //ScorePanel.saveScores();
+        } else if (load.equals(e.getSource())) {
+            reset();
+            loadGame();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: resets the display by covering all boxes
+    private void reset() {
+        board = new Board(10);
+        for (int i = 0; i < board.getBoard().length; i++) {
+            for (int j = 0; j < board.getBoard().length; j++) {
+                buttons[i][j].setText("");
+                buttons[i][j].setEnabled(true);
+            }
+        }
+        cp = new CounterPanel(board);
+        add(cp, BorderLayout.SOUTH);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads Board puzzle and ScoreBoard sb from GAME_FILE, if that file exists
     // otherwise calls init()
     private void loadGame() {
         try {
@@ -123,6 +199,7 @@ public class GamePanel extends JPanel implements ActionListener {
      */
     private void saveGame() {
         try {
+            sp.saveScores();
             FileSaver.writeBoard(board, "./data/Board.json");
             System.out.println("Game Saved");
         } catch (Exception e) {
@@ -153,23 +230,23 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS:  draws game over and replay messages onto g
-    private void gameOver(Graphics g) {
-        Color saved = g.getColor();
-        g.setColor(new Color(0, 0, 0));
-        g.setFont(new Font("Arial", 20, 20));
-        FontMetrics fm = g.getFontMetrics();
-        //centreString(GAME_OVER, g, fm, Board.HEIGHT / 2);
-        //centreString(REPLAY, g, fm, Board.HEIGHT / 2 + 50);
-        g.setColor(saved);
+    /*
+     * EFFECTS: checks whether all mines have been discovered
+     */
+    public boolean checkWinCondition() {
+        if (board.getMinesFlagged() == board.getMines() | board.getTotalCovered() == board.getMines()) {
+            //winGame();
+            return true;
+        }
+        return false;
     }
 
-    // MODIFIES: g
-    // EFFECTS:  centres the string str horizontally onto g at vertical position y
-    private void centreString(String str, Graphics g, FontMetrics fm, int y) {
-        int width = fm.stringWidth(str);
-        g.drawString(str, (Board.WIDTH - width) / 2, y);
+    /*
+     * MODIFIES: ScoreBoard
+     * EFFECTS: runs the winGame menu and adds name and score to scoreboard
+     */
+    private void winGame() {
+        printBoardSolution();
     }
 }
 

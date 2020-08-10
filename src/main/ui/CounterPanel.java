@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CounterPanel extends JPanel {
-    private static final String MINES_LEFT = "Mines: ";
-    private static final String BOXES_LEFT = "Boxes: ";
+    public static final String MINES_LEFT = "Mines: ";
+    public static final String BOXES_LEFT = "Boxes: ";
     private JLabel totalMines;
     private JLabel totalCovered;
     private Board board;

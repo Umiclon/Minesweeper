@@ -6,7 +6,7 @@ import ui.*;
 public class Board {
     private Box[][] board;
     public static final double DIFFICULTY = 0.25;
-    public static final int WIDTH = 1400;
+    public static final int WIDTH = 1500;
     public static final int HEIGHT = 1400;
     private int totalMines;
     private int totalCovered;
