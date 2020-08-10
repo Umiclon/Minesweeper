@@ -1,10 +1,11 @@
-// NOTE: based on https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase , and
-// https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete
+// NOTE: based on https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
 
 package ui;
 
 import model.Board;
 import model.ScoreBoard;
+import persistence.FileLoader;
+import persistence.FileSaver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,37 +13,67 @@ import java.awt.*;
 //represents the panel in which the scoreboard is displayed.
 @SuppressWarnings("serial")
 public class ScorePanel extends JPanel {
-    private static final String MINES_LEFT = "Mines: ";
-    private static final String BOXES_LEFT = "Boxes: ";
-    private static final int LBL_WIDTH = 750;
-    private static final int LBL_HEIGHT = 100;
-    private ScoreBoard scoreboard;
-    private JLabel totalMines;
-    private JLabel totalCovered;
-    private Board board;
+    protected static final int LBL_WIDTH = Board.WIDTH;
+    protected static final int LBL_HEIGHT = 100;
+    private ScoreBoard scoreBoard;
+    private JTextArea textArea;
+    JScrollPane scrollPane;
+    FileSaver fileSaver;
+    FileLoader fileLoader;
 
-    // EFFECTS: sets the background colour and draws the initial labels;
-    //          updates this with the game whose score is to be displayed
+    // EFFECTS: sets the background colour and draws the scrollPane,
     public ScorePanel(Board b) {
-        scoreboard = new ScoreBoard();
-        board = b;
+        scoreBoard = new ScoreBoard();
         setBackground(new Color(180, 180, 180));
-        totalMines = new JLabel(MINES_LEFT + board.getMines());
-        totalMines.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT));
-        totalMines.setFont(new Font("Arial", Font.PLAIN, LBL_HEIGHT / 2));
-        totalCovered = new JLabel(BOXES_LEFT + board.getTotalCovered());
-        totalCovered.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT));
-        totalCovered.setFont(new Font("Arial", Font.PLAIN, LBL_HEIGHT / 2));
-        add(totalMines);
-        add(Box.createHorizontalStrut(10));
-        add(totalCovered);
+        init();
+    }
+
+    /*
+     * MODIFIES: board
+     * EFFECTS: displays the initial scoreBoard
+     */
+    private void init() {
+        textArea = new JTextArea();
+        textArea.setFont(new Font("Arial", Font.PLAIN, 220 / 8));
+        textArea.append("SCOREBOARD");
+        textArea.setEditable(false);
+        scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(LBL_WIDTH,LBL_HEIGHT * 2));
+        add(scrollPane);
+        loadScores();
     }
 
     // MODIFIES: this
-    // EFFECTS:  updates number mines and boxes remaining to be flagged or uncovered
-    public void update() {
-        totalMines.setText(MINES_LEFT + board.getMines());
-        totalCovered.setText(BOXES_LEFT + board.getTotalCovered());
+    // EFFECTS: loads Board puzzle and ScoreBoard sb from GAME_FILE, if that file exists;
+    // otherwise calls init()
+    private void loadScores() {
+        try {
+            scoreBoard = FileLoader.readScoreBoard("./data/ScoreBoard.json");
+            for (String str: scoreBoard.getScoreBoard()) {
+                addEntry(str);
+            }
+        } catch (Exception e) {
+            System.out.println("No Saved Game \n");
+            init();
+        }
+    }
+
+    /*
+     * EFFECTS: saves Board puzzle and ScoreBoard sb to GAME_FILE
+     */
+    public void saveScores() {
+        try {
+            FileSaver.writeScoreBoard(scoreBoard, "./data/ScoreBoard.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // this is due to a programming error
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS:  displays a new entry on the scrollPane
+    public void addEntry(String entry) {
+        textArea.append("\n" + entry);
         repaint();
     }
 }

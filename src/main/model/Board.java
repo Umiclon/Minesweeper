@@ -1,15 +1,13 @@
 package model;
 
-import ui.MinesweeperConsole;
+import ui.*;
 
 //represents a game board with boxes that are either blocks or mines
 public class Board {
     private Box[][] board;
     public static final double DIFFICULTY = 0.25;
-    public static final int WIDTH = 1500;
-    public static final int HEIGHT = 1500;
-    public static final int BOX_X = 5;
-    public static final int BOX_Y = 5;
+    public static final int WIDTH = 1400;
+    public static final int HEIGHT = 1400;
     private int totalMines;
     private int totalCovered;
     private int minesFlagged;
@@ -25,6 +23,7 @@ public class Board {
         this.totalMines = 0;
         this.mines = 0;
         this.minesFlagged = 0;
+        fillBoard();
     }
 
     /*
@@ -141,133 +140,133 @@ public class Board {
     }
 
     /*
-     * EFFECTS: helper for the update method in Minesweeper ui
+     * EFFECTS: returns number that should be shown on the uncovered box as a string
      */
-    public void updateBoard(int i, int j) {
+    public String updateBoard(int i, int j) {
         if (this.getState(i, j) == 1) {
             if (i >= 1 && i < this.board.length - 1 && j >= 1 && j < this.board.length - 1) {
-                this.updateBox(i, j);
+                return this.updateBox(i, j);
             } else if (j >= 1 && j < this.board.length - 1 && i == 0) {
-                this.updateTop(i, j);
+                return this.updateTop(i, j);
             } else if (j >= 1 && j < this.board.length - 1) {
-                this.updateBot(i, j);
+                return this.updateBot(i, j);
             } else if (i >= 1 && i < this.board.length - 1 && j == 0) {
-                this.updateLeft(i, j);
+                return this.updateLeft(i, j);
             } else if (i >= 1 && i < this.board.length - 1) {
-                this.updateRight(i, j);
+                return this.updateRight(i, j);
             } else {
-                this.updateCorner(i, j);
+                return this.updateCorner(i, j);
             }
         } else if (this.isFlagged(i, j)) {
-            MinesweeperConsole.printFlag();
+            return "F";
         } else {
-            MinesweeperConsole.printCoveredBox();
+            return "X";
         }
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void updateBox(int i, int j) {
+    public String updateBox(int i, int j) {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {this.getBox(i, j - 1), this.getBox(i, j), this.getBox(i, j + 1)},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void updateTop(int i, int j) {
+    public String updateTop(int i, int j) {
         Box[][] a = new Box[][]{{block, block, block},
                 {this.getBox(i, j - 1), this.getBox(i, j), this.getBox(i, j + 1)},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void updateBot(int i, int j) {
+    public String updateBot(int i, int j) {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {this.getBox(i, j - 1), this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, block, block}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void updateLeft(int i, int j) {
+    public String updateLeft(int i, int j) {
         Box[][] a = new Box[][]{{block, this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {block, this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void updateRight(int i, int j) {
+    public String updateRight(int i, int j) {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), block},
                 {this.getBox(i, j - 1), this.getBox(i, j), block},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), block}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void updateCorner(int i, int j) {
+    public String updateCorner(int i, int j) {
         if (i == 0 && j == 0) {
-            this.topLeftCorner(i, j);
+            return this.topLeftCorner(i, j);
         } else if (i == 0 && j == this.board.length - 1) {
-            this.topRightCorner(i, j);
+            return this.topRightCorner(i, j);
         } else if (i == this.board.length - 1 && j == 0) {
-            this.botLeftCorner(i, j);
+            return this.botLeftCorner(i, j);
         } else {
-            this.botRightCorner(i, j);
+            return this.botRightCorner(i, j);
         }
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void topLeftCorner(int i, int j) {
+    public String topLeftCorner(int i, int j) {
         Box[][] a = new Box[][]{{block, block, block},
                 {block, this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, this.getBox(i + 1, j), this.getBox(i + 1, j + 1)}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void topRightCorner(int i, int j) {
+    public String topRightCorner(int i, int j) {
         Box[][] a = new Box[][]{{block, block, block},
                 {this.getBox(i, j - 1), this.getBox(i, j), block},
                 {this.getBox(i + 1, j - 1), this.getBox(i + 1, j), block}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void botLeftCorner(int i, int j) {
+    public String botLeftCorner(int i, int j) {
         Box[][] a = new Box[][]{{block, this.getBox(i - 1, j), this.getBox(i - 1, j + 1)},
                 {block, this.getBox(i, j), this.getBox(i, j + 1)},
                 {block, block, block}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
     /*
      * EFFECTS: helper for the update method
      */
-    public void botRightCorner(int i, int j) {
+    public String botRightCorner(int i, int j) {
         Box[][] a = new Box[][]{{this.getBox(i - 1, j - 1), this.getBox(i - 1, j), block},
                 {this.getBox(i, j - 1), this.getBox(i, j), block},
                 {block, block, block}};
-        MinesweeperConsole.printBox(this.numberOfSurroundingMines(i, j, a));
+        return Integer.toString(this.numberOfSurroundingMines(i, j, a));
     }
 
 }

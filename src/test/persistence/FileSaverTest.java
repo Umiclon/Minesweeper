@@ -16,7 +16,6 @@ public class FileSaverTest {
     void testSaveFile1() {
         try {
             Board a1 = new Board(3);
-            a1.fillBoard();
 
             FileSaver.writeBoard(a1, "./data/Board.json");
 

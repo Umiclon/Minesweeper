@@ -36,23 +36,6 @@ public class Block extends Box {
     }
 
     /*
-     * REQUIRES: board = new Box[3][3]
-     * EFFECTS: returns the number of mines in a 3x3 area on the board
-     */
-//    public int numberOfSurroundingMines(Box[][] board) {
-//        int sum = 0;
-//
-//        for (int i = 0; i < board[0].length; i++) {
-//            for (int j = 0; j < board.length; j++) {
-//                if (board[i][j].getName().equals("mine")) {
-//                    sum++;
-//                }
-//            }
-//        }
-//        return sum;
-//    }
-
-    /*
      * MODIFIES: this
      * EFFECTS: sets gameOver to true, flagged to false, and updates the state
      */

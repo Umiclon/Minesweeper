@@ -13,7 +13,6 @@ class BoardTest {
     @BeforeEach
     void runBefore() {
         board = new Board(3);
-        board.fillBoard();
     }
 
     @Test

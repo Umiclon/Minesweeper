@@ -1,5 +1,6 @@
-// NOTE: based on https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase , and
-// https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete
+// NOTE: based on https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase ,
+// https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete , and
+// https://codereview.stackexchange.com/questions/215081/minesweeper-game-in-java-using-swing-gui
 
 package ui;
 
@@ -15,29 +16,32 @@ public class MinesweeperGUI extends JFrame {
 
     private Board board;
     private GamePanel gp;
+    private CounterPanel cp;
     private ScorePanel sp;
 
     // EFFECTS: sets up the window in which the Minesweeper game will be played
     public MinesweeperGUI() {
         super("Minesweeper");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
-        board = new Board(3);
-        gp = new GamePanel(board);
-        sp = new ScorePanel(board);
-        add(gp);
-        add(sp, BorderLayout.SOUTH);
-
-        JTextArea textArea = new JTextArea();
-        textArea.setFont(new Font("Arial", Font.PLAIN, 220 / 4));
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(1000,200));
-        add(scrollPane, BorderLayout.NORTH);
-
         addKeyListener(new KeyHandler());
+        init();
         pack();
         centreOnScreen();
         setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS:  initializes the panels
+    private void init() {
+        board = new Board(10);
+        sp = new ScorePanel(board);
+        gp = new GamePanel(board);
+        cp = new CounterPanel(board);
+        add(sp, BorderLayout.NORTH);
+        add(gp);
+        add(cp, BorderLayout.SOUTH);
     }
 
     // MODIFIES: this
@@ -53,10 +57,6 @@ public class MinesweeperGUI extends JFrame {
         public void keyPressed(KeyEvent e) {
             //board.keyPressed(e.getKeyCode());
         }
-    }
-
-    public static void main(String[] args) {
-        new MinesweeperGUI();
     }
 }
 
