@@ -254,10 +254,28 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
             board = FileLoader.readBoard("./data/Board.json");
             sp.loadScores();
             sp.init();
-            //update();
+            cp.updateCounters();
+            updateButtons();
         } catch (Exception e) {
             System.out.println("No Saved Game \n");
             //init();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates the Buttons according to the state of the loaded Board
+    public void updateButtons() {
+        for (int x = 0; x < buttons.length; x++) {
+            for (int y = 0; y < buttons.length; y++) {
+                if (1 == board.getState(x, y)) {
+                    buttons[x][y].setText(board.updateBoard(x, y));
+                    buttons[x][y].setEnabled(false);
+                } else if (2 == board.getState(x, y) || 7 == board.getState(x, y)) {
+                    buttons[x][y].setIcon(flagIcon);
+                } else if (6 == board.getState(x, y)) {
+                    buttons[x][y].setIcon(mineIcon);
+                }
+            }
         }
     }
 
@@ -320,7 +338,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     public void gameOver() {
         JOptionPane.showMessageDialog(null, "You lost!", "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
-        double score = 100 * board.getMines() / board.getBoard().length / board.getBoard().length;
+        double score = 100 - 100 * board.getTotalCovered() / board.getBoard().length / board.getBoard().length;
         sp.addEntry("Player: " + Integer.toString((int) score));
         sp.getScoreBoard().addEntry("Player", Integer.toString((int) score));
     }
