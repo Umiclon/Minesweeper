@@ -14,7 +14,7 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class ScorePanel extends JPanel {
     protected static final int LBL_WIDTH = Board.WIDTH;
-    protected static final int LBL_HEIGHT = 100;
+    protected static final int LBL_HEIGHT = 50;
     private ScoreBoard scoreBoard;
     private JTextArea textArea;
     JScrollPane scrollPane;
@@ -24,7 +24,7 @@ public class ScorePanel extends JPanel {
     // EFFECTS: sets the background colour and draws the scrollPane,
     public ScorePanel(Board b) {
         scoreBoard = new ScoreBoard();
-        setBackground(new Color(180, 180, 180));
+        setBackground(new Color(101, 140, 153));
         init();
     }
 

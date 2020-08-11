@@ -23,11 +23,10 @@ import javax.swing.Box;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements ActionListener, MouseListener {
     private Board board;
+    private int size;
     private JButton[][] buttons;
     private Container grid;
-    FileSaver fileSaver;
-    FileLoader fileLoader;
-    private JPanel optionPanel;
+    //private JPanel optionPanel;
     private JButton reset;
     private JButton save;
     private JButton load;
@@ -38,23 +37,26 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     // EFFECTS:  sets size and background colour of panel,
     //           updates this with the game to be displayed
-    public GamePanel(Board b, ScorePanel sp, CounterPanel cp) {
-        setPreferredSize(new Dimension(Board.WIDTH + 000, Board.HEIGHT + 100));
-        setBackground(Color.GRAY);
+    public GamePanel(Board b, ScorePanel sp, CounterPanel cp, Container grid) {
+        setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT));
+        setBackground(Color.YELLOW);
+        setBorder(BorderFactory.createEmptyBorder(0,1600,1600,1600));
         this.board = b;
+        this.size = b.getBoard().length;
         this.sp = sp;
         this.cp = cp;
+        this.grid = grid;
         init();
         drawGrid();
 
         try {
             Image scaledMine = ImageIO.read(new File("data/mineIcon.jpg"));
             scaledMine = scaledMine.getScaledInstance(Board.WIDTH / board.getBoard().length,
-                    Board.HEIGHT / board.getBoard().length, Image.SCALE_SMOOTH);
+                    (Board.HEIGHT - ScorePanel.LBL_HEIGHT * 2) / board.getBoard().length, Image.SCALE_SMOOTH);
             mineIcon = new ImageIcon(scaledMine);
             Image scaledFlag = ImageIO.read(new File("data/flagIcon.png"));
             scaledFlag = scaledFlag.getScaledInstance(Board.WIDTH / board.getBoard().length,
-                    Board.HEIGHT / board.getBoard().length, Image.SCALE_SMOOTH);
+                    (Board.HEIGHT - ScorePanel.LBL_HEIGHT * 2) / board.getBoard().length, Image.SCALE_SMOOTH);
             flagIcon = new ImageIcon(scaledFlag);
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,34 +64,31 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     }
 
     private void init() {
-        optionPanel = new JPanel();
-
         reset = new JButton("Reset");
         save = new JButton("Save");
         load = new JButton("Load");
 
-        reset.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 3, ScorePanel.LBL_HEIGHT / 2));
-        save.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 3, ScorePanel.LBL_HEIGHT / 2));
-        load.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 3, ScorePanel.LBL_HEIGHT / 2));
-        reset.setFont(new Font("Arial", Font.PLAIN, Board.WIDTH / board.getBoard().length / 3));
-        save.setFont(new Font("Arial", Font.PLAIN, Board.WIDTH / board.getBoard().length / 3));
-        load.setFont(new Font("Arial", Font.PLAIN, Board.WIDTH / board.getBoard().length / 3));
+        reset.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 5, ScorePanel.LBL_HEIGHT));
+        save.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 5, ScorePanel.LBL_HEIGHT));
+        load.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 5, ScorePanel.LBL_HEIGHT));
+        reset.setFont(new Font("Arial", Font.PLAIN, ScorePanel.LBL_HEIGHT));
+        save.setFont(new Font("Arial", Font.PLAIN, ScorePanel.LBL_HEIGHT));
+        load.setFont(new Font("Arial", Font.PLAIN, ScorePanel.LBL_HEIGHT));
 
         reset.addActionListener(this);
         save.addActionListener(this);
         load.addActionListener(this);
 
-        optionPanel.add(reset);
-        optionPanel.add(save);
-        optionPanel.add(load);
-        add(optionPanel, BorderLayout.SOUTH);
+        cp.add(reset);
+        cp.add(save);
+        cp.add(load);
     }
 
     // MODIFIES: this
     // EFFECTS:  draws the boxes onto grid
     private void drawGrid() {
-        grid = new Container();
         grid.setLayout(new GridLayout(board.getBoard().length, board.getBoard().length));
+        grid.setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT - ScorePanel.LBL_HEIGHT));
         buttons = new JButton[board.getBoard().length][board.getBoard().length];
         for (int i = 0; i < board.getBoard().length; i++) {
             for (int j = 0; j < board.getBoard().length; j++) {
@@ -97,13 +96,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
                 buttons[i][j].addActionListener(this);
                 buttons[i][j].addMouseListener(this);
                 buttons[i][j].setPreferredSize(new Dimension(Board.WIDTH / board.getBoard().length,
-                        Board.HEIGHT / board.getBoard().length));
+                        (Board.HEIGHT - ScorePanel.LBL_HEIGHT * 2) / board.getBoard().length));
                 buttons[i][j].setFont(new Font("Arial", Font.PLAIN,
                         Board.WIDTH / board.getBoard().length / 2));
                 grid.add(buttons[i][j]);
             }
         }
-        add(grid);
     }
 
 
@@ -233,13 +231,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     // MODIFIES: this
     // EFFECTS: resets the display by covering all boxes
     private void reset() {
-        board = new Board(10);
+        board = new Board(size);
         for (int i = 0; i < board.getBoard().length; i++) {
             for (int j = 0; j < board.getBoard().length; j++) {
                 buttons[i][j].setText(null);
                 buttons[i][j].setEnabled(true);
                 buttons[i][j].setIcon(null);
-
             }
         }
         cp.setBoard(board);
@@ -252,6 +249,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     private void loadGame() {
         try {
             board = FileLoader.readBoard("./data/Board.json");
+            size = board.getBoard().length;
             sp.loadScores();
             sp.init();
             cp.updateCounters();
