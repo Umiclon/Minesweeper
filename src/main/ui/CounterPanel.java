@@ -22,7 +22,7 @@ public class CounterPanel extends JPanel {
     // EFFECTS:  draws the boxes onto grid
     private void drawCounters() {
         setBackground(new Color(180, 180, 180));
-        totalMines = new JLabel(MINES_LEFT + board.getMines());
+        totalMines = new JLabel(MINES_LEFT + board.getTotalMines());
         totalMines.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 2, ScorePanel.LBL_HEIGHT));
         totalMines.setFont(new Font("Arial", Font.PLAIN, ScorePanel.LBL_HEIGHT / 2));
         totalCovered = new JLabel(BOXES_LEFT + board.getTotalCovered());
@@ -36,8 +36,12 @@ public class CounterPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS:  updates number mines and boxes remaining to be flagged or uncovered
     public void updateCounters() {
-        totalMines.setText(MINES_LEFT + board.getMines());
+        totalMines.setText(MINES_LEFT + board.getTotalMines());
         totalCovered.setText(BOXES_LEFT + board.getTotalCovered());
         repaint();
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 }

@@ -23,15 +23,16 @@
   - *reveal a box on the board*
   - *flag and un-flag a box on the board*
   - *choose the size of the board*
-  - *add a name and score to the scoreboard*
+  - *add a score to the scoreboard*
     
   - *have the option to load when starting the game*   
   - *save the game when quitting*
     
     
  ## Instructions for Grader
-  - *You can generate the first required event by...*
-  - *You can generate the second required event by...*
-  - *You can trigger my audio component by...*
-  - *You can save the state of my application by...*
-  - *You can load the state of my application by...*
+  - *You can scroll to view the whole ScoreBoard*
+  - *You can click on a mine to lose, and your score will be added to ScoreBoard*
+  - *You can trigger my visual component by right clicking on a covered box or left clicking on a hidden mine*
+  - *You can save the state of the game by clicking on the save button*
+  - *You can load the state of the game by clicking on the load button*
+  - *You can load a new game by clicking on the reset button*

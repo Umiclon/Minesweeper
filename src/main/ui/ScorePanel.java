@@ -28,30 +28,39 @@ public class ScorePanel extends JPanel {
         init();
     }
 
+    // Getter
+    public ScoreBoard getScoreBoard() {
+        return this.scoreBoard;
+    }
+
+    public void setScoreBoard(ScoreBoard scoreBoard) {
+        this.scoreBoard = scoreBoard;
+    }
+
     /*
      * MODIFIES: board
      * EFFECTS: displays the initial scoreBoard
      */
-    private void init() {
+    public void init() {
         textArea = new JTextArea();
         textArea.setFont(new Font("Arial", Font.PLAIN, 220 / 8));
         textArea.append("SCOREBOARD");
         textArea.setEditable(false);
         scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(LBL_WIDTH,LBL_HEIGHT * 2));
+        scrollPane.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT * 2));
         add(scrollPane);
         loadScores();
+        for (String str : scoreBoard.getScoreBoard()) {
+            addEntry(str);
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: loads Board puzzle and ScoreBoard sb from GAME_FILE, if that file exists;
     // otherwise calls init()
-    private void loadScores() {
+    public void loadScores() {
         try {
             scoreBoard = FileLoader.readScoreBoard("./data/ScoreBoard.json");
-            for (String str: scoreBoard.getScoreBoard()) {
-                addEntry(str);
-            }
         } catch (Exception e) {
             System.out.println("No Saved Game \n");
             init();

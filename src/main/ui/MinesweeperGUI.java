@@ -30,16 +30,6 @@ public class MinesweeperGUI extends JFrame {
         pack();
         centreOnScreen();
         setVisible(true);
-        while (true) {
-            if (true) {
-                JTextArea name = new JTextArea();
-                //add(name);
-                if (!name.getText().equals("")) {
-                    //sp.addEntry(name.getText());
-                }
-                break;
-            }
-        }
     }
 
     // MODIFIES: this
@@ -50,8 +40,31 @@ public class MinesweeperGUI extends JFrame {
         cp = new CounterPanel(board);
         gp = new GamePanel(board, sp, cp);
         add(sp, BorderLayout.NORTH);
-        add(gp);
+        add(gp, BorderLayout.CENTER);
         add(cp, BorderLayout.SOUTH);
+    }
+
+    /*
+     * MODIFIES: ScoreBoard
+     * EFFECTS: runs the gameOver menu and adds name and score to scoreboard
+     */
+    public void gameOver() {
+//        while (true) {
+//            if (board.isGameOver(0,0)) {
+//                gameOver();
+//                break;
+//            }
+//        }
+        gp.setEnabled(false);
+        JPanel textBox = new JPanel();
+        JTextField textField = new JTextField();
+        textField.setPreferredSize(new Dimension(Board.WIDTH, 100));
+        textField.setFont(new Font("Arial", Font.PLAIN, 220 / 8));
+        textField.setEnabled(true);
+        textBox.add(textField);
+        add(textBox, BorderLayout.NORTH);
+        //textField.setLocation(Board.WIDTH / 2, Board.HEIGHT / 2);
+        sp.addEntry(textField.getText());
     }
 
     // MODIFIES: this
