@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     public GamePanel(Board b, ScorePanel sp, CounterPanel cp, Container grid) {
         setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT));
         setBackground(Color.YELLOW);
-        setBorder(BorderFactory.createEmptyBorder(0,1600,1600,1600));
+        setBorder(BorderFactory.createEmptyBorder(0, 1600, 1600, 1600));
         this.board = b;
         this.size = b.getBoard().length;
         this.sp = sp;
@@ -206,13 +206,38 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
                         board.setTotalCovered(board.getTotalCovered() - 1);
                         cp.updateCounters();
                         board.changeState(x, y);
+                        textColour(x, y);
                         buttons[x][y].setText((board.updateBoard(x, y)));
-                        buttons[x][y].setEnabled(false);
+                        //buttons[x][y].setEnabled(false);
                     }
                 }
             }
         }
     }
+
+    // EFFECTS: helper for selecting the colour of a button's text
+    public void textColour(int x, int y) {
+        if (Integer.parseInt(board.updateBoard(x, y)) == 1) {
+            buttons[x][y].setForeground(Color.BLUE);
+        } else if (Integer.parseInt(board.updateBoard(x, y)) == 2) {
+            buttons[x][y].setForeground(Color.GREEN);
+        } else if (Integer.parseInt(board.updateBoard(x, y)) == 3) {
+            buttons[x][y].setForeground(Color.RED);
+        } else if (Integer.parseInt(board.updateBoard(x, y)) == 4) {
+            buttons[x][y].setForeground(new Color(0, 0, 139));
+        } else if (Integer.parseInt(board.updateBoard(x, y)) == 5) {
+            buttons[x][y].setForeground(new Color(101, 67, 33));
+        } else if (Integer.parseInt(board.updateBoard(x, y)) == 6) {
+            buttons[x][y].setForeground(Color.CYAN);
+        } else if (Integer.parseInt(board.updateBoard(x, y)) == 7) {
+            buttons[x][y].setForeground(Color.BLACK);
+        } else if (Integer.parseInt(board.updateBoard(x, y)) == 8) {
+            buttons[x][y].setForeground(Color.GRAY);
+        } else {
+            buttons[x][y].setForeground(Color.LIGHT_GRAY);
+        }
+    }
+
 
     // MODIFIES: this
     // EFFECTS: deals with option buttons being clicked
@@ -266,8 +291,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         for (int x = 0; x < buttons.length; x++) {
             for (int y = 0; y < buttons.length; y++) {
                 if (1 == board.getState(x, y)) {
+                    textColour(x, y);
                     buttons[x][y].setText(board.updateBoard(x, y));
-                    buttons[x][y].setEnabled(false);
+                    buttons[x][y].setEnabled(true);
                 } else if (2 == board.getState(x, y) || 7 == board.getState(x, y)) {
                     buttons[x][y].setIcon(flagIcon);
                 } else if (6 == board.getState(x, y)) {
@@ -302,9 +328,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
                 if ("mine".equals(board.getName(x, y))) {
                     buttons[x][y].setIcon(mineIcon);
                 } else {
+                    textColour(x, y);
                     buttons[x][y].setText((board.updateBoard(x, y)));
                     buttons[x][y].setIcon(null);
-                    buttons[x][y].setEnabled(false);
+                    buttons[x][y].setEnabled(true);
                 }
             }
         }

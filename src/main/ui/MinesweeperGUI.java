@@ -51,7 +51,7 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
 
         input = new JTextField("", 20);
         input.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 8, ScorePanel.LBL_HEIGHT * 2));
-        input.setFont(new Font("Arial", Font.PLAIN, ScorePanel.LBL_HEIGHT ));
+        input.setFont(new Font("Arial", Font.PLAIN, ScorePanel.LBL_HEIGHT));
         input.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         start = new JButton("Start");
