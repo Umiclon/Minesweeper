@@ -355,10 +355,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         printBoardSolution();
         JOptionPane.showMessageDialog(null, "You won!", "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
-        double score = 100 - 100 * (board.getTotalCovered() + board.getMinesFlagged())
-                / board.getBoard().length / board.getBoard().length;
-        sp.addEntry("Player: " + Integer.toString((int) score));
-        sp.getScoreBoard().addEntry("Player", Integer.toString((int) score));
+        sp.addEntry("Player: " + 100);
+        sp.getScoreBoard().addEntry("Player", "100");
     }
 
     /*
@@ -369,9 +367,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         printBoardSolution();
         JOptionPane.showMessageDialog(null, "You lost!", "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
-        double score = 100 - 100 * (board.getTotalCovered() + board.getMinesFlagged())
-                / board.getBoard().length / board.getBoard().length;
-        sp.addEntry("Player: " + Integer.toString((int) score));
+        double boardExposed = (double) board.getMines()
+                / (double) (board.getTotalCovered() - board.getMinesFlagged());
+        double score = 100 * boardExposed;
+        sp.addEntry("Player: " + (int) score);
         sp.getScoreBoard().addEntry("Player", Integer.toString((int) score));
     }
 }

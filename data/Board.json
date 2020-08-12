@@ -2,629 +2,169 @@
   "board": [
     [
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       }
     ],
     [
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      }
-    ],
-    [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      }
-    ],
-    [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       }
     ],
     [
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
+        "gameOver": true,
+        "name": "block"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       }
     ],
     [
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       },
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "block"
       }
     ],
     [
       {
-        "state": 0,
+        "state": 1,
         "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
+        "name": "block"
+      },
+      {
+        "state": 1,
+        "flagged": false,
+        "gameOver": true,
+        "name": "block"
+      },
+      {
+        "state": 1,
+        "flagged": false,
+        "gameOver": true,
+        "name": "block"
+      },
+      {
+        "state": 6,
+        "flagged": false,
+        "gameOver": true,
         "name": "mine"
       },
       {
-        "state": 0,
+        "state": 6,
         "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      }
-    ],
-    [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      }
-    ],
-    [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      }
-    ],
-    [
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "mine"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
-        "name": "block"
-      },
-      {
-        "state": 0,
-        "flagged": false,
-        "gameOver": false,
+        "gameOver": true,
         "name": "mine"
       }
     ]
   ],
-  "totalMines": 46,
-  "totalCovered": 100,
+  "totalMines": 11,
+  "totalCovered": 23,
   "minesFlagged": 0,
-  "mines": 46,
+  "mines": 11,
   "block": {
     "state": 0,
     "flagged": false,

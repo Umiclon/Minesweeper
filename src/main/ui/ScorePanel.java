@@ -43,11 +43,11 @@ public class ScorePanel extends JPanel {
      */
     public void init() {
         textArea = new JTextArea();
-        textArea.setFont(new Font("Arial", Font.PLAIN, 220 / 8));
+        textArea.setFont(new Font("Arial", Font.PLAIN, LBL_HEIGHT / 2));
         textArea.append("SCOREBOARD");
         textArea.setEditable(false);
         scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT * 2));
+        scrollPane.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT * 3));
         add(scrollPane);
         loadScores();
         for (String str : scoreBoard.getScoreBoard()) {

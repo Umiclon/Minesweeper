@@ -35,8 +35,8 @@ public class CounterPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS:  updates number mines and boxes remaining to be flagged or uncovered
     public void updateCounters() {
-        totalMines.setText(MINES_LEFT + board.getTotalMines());
-        totalCovered.setText(BOXES_LEFT + board.getTotalCovered());
+        totalMines.setText(MINES_LEFT + (Math.max(board.getTotalMines(), 0)));
+        totalCovered.setText(BOXES_LEFT + (Math.max(board.getTotalCovered(), 0)));
         repaint();
     }
 
