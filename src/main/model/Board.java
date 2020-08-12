@@ -5,7 +5,7 @@ import ui.*;
 //represents a game board with boxes that are either blocks or mines
 public class Board {
     private Box[][] board;
-    public static final double DIFFICULTY = 0.45;
+    public static final double DIFFICULTY = 0.35;
     public static final int WIDTH = 1750;
     public static final int HEIGHT = 1750;
     private int totalMines;

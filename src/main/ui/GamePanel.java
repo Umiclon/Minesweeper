@@ -5,19 +5,15 @@
 package ui;
 
 import model.Board;
-import model.*;
 import persistence.FileLoader;
 import persistence.FileSaver;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.Box;
 
 //the panel in which the game is rendered.
 @SuppressWarnings("serial")
@@ -131,6 +127,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
                 }
             }
         }
+
+        if (checkWinCondition()) {
+            winGame();
+        }
     }
 
     //EFFECTS: helper for mousePressed
@@ -193,22 +193,24 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         optionSelected(e);
 
-        for (int x = 0; x < buttons.length; x++) {
-            for (int y = 0; y < buttons.length; y++) {
-                if (e.getSource() == buttons[x][y]) {
-                    if ("mine".equals(board.getName(x, y))) {
-                        printBoardSolution();
-                        gameOver();
-                    } else {
-                        if (checkWinCondition()) {
-                            winGame();
+        if (checkWinCondition()) {
+            winGame();
+
+        } else {
+
+            for (int x = 0; x < buttons.length; x++) {
+                for (int y = 0; y < buttons.length; y++) {
+                    if (e.getSource() == buttons[x][y]) {
+                        if ("mine".equals(board.getName(x, y))) {
+                            gameOver();
+                        } else {
+                            board.setTotalCovered(board.getTotalCovered() - 1);
+                            cp.updateCounters();
+                            board.changeState(x, y);
+                            textColour(x, y);
+                            buttons[x][y].setText((board.updateBoard(x, y)));
+                            //buttons[x][y].setEnabled(false);
                         }
-                        board.setTotalCovered(board.getTotalCovered() - 1);
-                        cp.updateCounters();
-                        board.changeState(x, y);
-                        textColour(x, y);
-                        buttons[x][y].setText((board.updateBoard(x, y)));
-                        //buttons[x][y].setEnabled(false);
                     }
                 }
             }
@@ -277,8 +279,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
             size = board.getBoard().length;
             sp.loadScores();
             sp.init();
+            cp.setBoard(board);
             cp.updateCounters();
-            updateButtons();
+            loadButtons();
         } catch (Exception e) {
             System.out.println("No Saved Game \n");
             //init();
@@ -287,7 +290,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     // MODIFIES: this
     // EFFECTS: updates the Buttons according to the state of the loaded Board
-    public void updateButtons() {
+    public void loadButtons() {
         for (int x = 0; x < buttons.length; x++) {
             for (int y = 0; y < buttons.length; y++) {
                 if (1 == board.getState(x, y)) {
@@ -341,11 +344,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
      * EFFECTS: checks whether all mines have been discovered
      */
     public boolean checkWinCondition() {
-        if (board.getMinesFlagged() == board.getMines() | board.getTotalCovered() == board.getMines()) {
-            winGame();
-            return true;
-        }
-        return false;
+        return (board.getMinesFlagged() == board.getMines() || board.getTotalCovered() == board.getMines());
     }
 
     /*
@@ -354,6 +353,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
      */
     private void winGame() {
         printBoardSolution();
+        JOptionPane.showMessageDialog(null, "You won!", "GAME OVER",
+                JOptionPane.INFORMATION_MESSAGE);
+        double score = 100 - 100 * (board.getTotalCovered() + board.getMinesFlagged())
+                / board.getBoard().length / board.getBoard().length;
+        sp.addEntry("Player: " + Integer.toString((int) score));
+        sp.getScoreBoard().addEntry("Player", Integer.toString((int) score));
     }
 
     /*
@@ -361,9 +366,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
      * EFFECTS: runs the gameOver menu and adds name and score to scoreboard
      */
     public void gameOver() {
+        printBoardSolution();
         JOptionPane.showMessageDialog(null, "You lost!", "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
-        double score = 100 - 100 * board.getTotalCovered() / board.getBoard().length / board.getBoard().length;
+        double score = 100 - 100 * (board.getTotalCovered() + board.getMinesFlagged())
+                / board.getBoard().length / board.getBoard().length;
         sp.addEntry("Player: " + Integer.toString((int) score));
         sp.getScoreBoard().addEntry("Player", Integer.toString((int) score));
     }
