@@ -18,10 +18,8 @@ public class ScorePanel extends JPanel {
     private ScoreBoard scoreBoard;
     private JTextArea textArea;
     JScrollPane scrollPane;
-    FileSaver fileSaver;
-    FileLoader fileLoader;
 
-    // EFFECTS: sets the background colour and draws the scrollPane,
+    // EFFECTS: sets the background colour and draws the scorePanel
     public ScorePanel(Board b) {
         scoreBoard = new ScoreBoard();
         setBackground(new Color(101, 140, 153));
@@ -33,12 +31,13 @@ public class ScorePanel extends JPanel {
         return this.scoreBoard;
     }
 
+    // Setter
     public void setScoreBoard(ScoreBoard scoreBoard) {
         this.scoreBoard = scoreBoard;
     }
 
     /*
-     * MODIFIES: board
+     * MODIFIES: this
      * EFFECTS: displays the initial scoreBoard
      */
     public void init() {
@@ -56,7 +55,7 @@ public class ScorePanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads Board puzzle and ScoreBoard sb from GAME_FILE, if that file exists;
+    // EFFECTS: loads ScoreBoard from ScoreBoard.json, if that file exists;
     // otherwise calls init()
     public void loadScores() {
         try {
@@ -68,7 +67,7 @@ public class ScorePanel extends JPanel {
     }
 
     /*
-     * EFFECTS: saves Board puzzle and ScoreBoard sb to GAME_FILE
+     * EFFECTS: saves ScoreBoard to ScoreBoard.json
      */
     public void saveScores() {
         try {
@@ -80,7 +79,7 @@ public class ScorePanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS:  displays a new entry on the scrollPane
+    // EFFECTS:  adds a new entry to the scrollPane
     public void addEntry(String entry) {
         textArea.append("\n" + entry);
         repaint();

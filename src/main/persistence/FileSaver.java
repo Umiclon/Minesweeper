@@ -33,7 +33,7 @@ public class FileSaver {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        Writer writer2 = Files.newBufferedWriter(Paths.get("./data/ScoreBoard.json"));
+        Writer writer2 = Files.newBufferedWriter(Paths.get(path));
 
         gson.toJson(sb, writer2);
 

@@ -5,10 +5,12 @@
 package ui;
 
 import model.Board;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 // represents the main window of the Minesweeper game
 @SuppressWarnings("serial")
@@ -24,7 +26,6 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
     private JTextField input;
     private JLabel startMsg;
     private Container grid;
-    private JPanel optionPanel;
 
     // EFFECTS: sets up the window in which the Minesweeper game will be played
     public MinesweeperGUI() {
@@ -32,7 +33,6 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
-        addKeyListener(new KeyHandler());
         start();
         pack();
         centreOnScreen();
@@ -40,7 +40,7 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS:  initializes start screen
+    // EFFECTS:  displays start screen
     private void start() {
         startScreen = new JPanel();
         startScreen.setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT + ScorePanel.LBL_HEIGHT));
@@ -67,6 +67,8 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
         add(startScreen);
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles JButton actions
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == start) {
@@ -99,36 +101,6 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
     private void centreOnScreen() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2 - 50);
-    }
-
-    // EFFECTS: reads key input
-    private class KeyHandler extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e) {
-        }
-    }
-
-    /*
-     * MODIFIES: ScoreBoard
-     * EFFECTS: runs the gameOver menu and adds name and score to scoreboard
-     */
-    public void gameOver() {
-//        while (true) {
-//            if (board.isGameOver(0,0)) {
-//                gameOver();
-//                break;
-//            }
-//        }
-        gp.setEnabled(false);
-        JPanel textBox = new JPanel();
-        JTextField textField = new JTextField();
-        textField.setPreferredSize(new Dimension(Board.WIDTH, 100));
-        textField.setFont(new Font("Arial", Font.PLAIN, 220 / 8));
-        textField.setEnabled(true);
-        textBox.add(textField);
-        add(textBox, BorderLayout.NORTH);
-        //textField.setLocation(Board.WIDTH / 2, Board.HEIGHT / 2);
-        sp.addEntry(textField.getText());
     }
 }
 

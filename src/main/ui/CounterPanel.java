@@ -12,14 +12,20 @@ public class CounterPanel extends JPanel {
     private JLabel totalCovered;
     private Board board;
 
+    // EFFECTS: creates the panel with a gray background
     public CounterPanel(Board b) {
         this.board = b;
         setBackground(Color.GRAY);
         drawCounters();
     }
 
+    // Setter
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     // MODIFIES: this
-    // EFFECTS:  draws the boxes onto grid
+    // EFFECTS:  draws the the counterPanel
     private void drawCounters() {
         setBackground(new Color(138, 154, 184));
         totalMines = new JLabel(MINES_LEFT + board.getTotalMines());
@@ -38,9 +44,5 @@ public class CounterPanel extends JPanel {
         totalMines.setText(MINES_LEFT + (Math.max(board.getTotalMines(), 0)));
         totalCovered.setText(BOXES_LEFT + (Math.max(board.getTotalCovered(), 0)));
         repaint();
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
     }
 }

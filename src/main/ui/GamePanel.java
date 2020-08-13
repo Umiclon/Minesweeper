@@ -42,9 +42,14 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         this.sp = sp;
         this.cp = cp;
         this.grid = grid;
-        init();
+        initOptions();
         drawGrid();
+        initImageIcons();
+    }
 
+    // MODIFIES: this
+    // EFFECTS: gets imageIcons from file
+    public void initImageIcons() {
         try {
             Image scaledMine = ImageIO.read(new File("data/mineIcon.jpg"));
             scaledMine = scaledMine.getScaledInstance(Board.WIDTH / board.getBoard().length,
@@ -59,7 +64,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         }
     }
 
-    private void init() {
+    // MODIFIES: this, counterPanel
+    // EFFECTS: draws the option buttons onto counterPanel
+    private void initOptions() {
         reset = new JButton("Reset");
         save = new JButton("Save");
         load = new JButton("Load");
@@ -102,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 
     // MODIFIES: this
-    // EFFECTS: deals with right-click events
+    // EFFECTS: deals with mouse events
     public void mousePressed(MouseEvent e) {
         JButton b = (JButton) e.getSource();
 
@@ -240,7 +247,6 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         }
     }
 
-
     // MODIFIES: this
     // EFFECTS: deals with option buttons being clicked
     public void optionSelected(ActionEvent e) {
@@ -271,7 +277,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads Board puzzle and ScoreBoard sb from GAME_FILE, if that file exists
+    // EFFECTS: loads Board from Board.json, if that file exists
     // otherwise calls init()
     private void loadGame() {
         try {
@@ -307,7 +313,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     }
 
     /*
-     * EFFECTS: saves Board puzzle and ScoreBoard sb to GAME_FILE
+     * MODIFIES: file
+     * EFFECTS: saves Board to Board.json
      */
     private void saveGame() {
         try {
@@ -321,6 +328,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     }
 
     /*
+     * MODIFIES: this
      * EFFECTS: prints out the solution for the game
      */
     private void printBoardSolution() {
@@ -348,7 +356,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     }
 
     /*
-     * MODIFIES: ScoreBoard
+     * MODIFIES: this
      * EFFECTS: runs the winGame menu and adds name and score to scoreboard
      */
     private void winGame() {
@@ -360,7 +368,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     }
 
     /*
-     * MODIFIES: ScoreBoard
+     * MODIFIES: this
      * EFFECTS: runs the gameOver menu and adds name and score to scoreboard
      */
     public void gameOver() {
