@@ -158,9 +158,9 @@ public class Board {
                 return this.updateCorner(i, j);
             }
         } else if (this.isFlagged(i, j)) {
-            return "F";
+            return "";
         } else {
-            return "X";
+            return "";
         }
     }
 

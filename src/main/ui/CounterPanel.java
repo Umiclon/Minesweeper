@@ -26,7 +26,7 @@ public class CounterPanel extends JPanel {
 
     // MODIFIES: this
     // EFFECTS:  draws the the counterPanel
-    private void drawCounters() {
+    public void drawCounters() {
         setBackground(new Color(138, 154, 184));
         totalMines = new JLabel(MINES_LEFT + board.getTotalMines());
         totalMines.setPreferredSize(new Dimension(ScorePanel.LBL_WIDTH / 6, ScorePanel.LBL_HEIGHT));

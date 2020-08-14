@@ -41,7 +41,7 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS:  displays start screen
-    private void start() {
+    public void start() {
         startScreen = new JPanel();
         startScreen.setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT + ScorePanel.LBL_HEIGHT));
         startMsg = new JLabel("Enter board size: ", SwingConstants.CENTER);
@@ -82,7 +82,7 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS:  initializes the panels
-    private void init() {
+    public void init() {
         board = new Board(size);
         sp = new ScorePanel(board);
         cp = new CounterPanel(board);
@@ -98,7 +98,7 @@ public class MinesweeperGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS:  location of frame is set so frame is centred on desktop
-    private void centreOnScreen() {
+    public void centreOnScreen() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2 - 50);
     }

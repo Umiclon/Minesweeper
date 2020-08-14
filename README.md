@@ -42,4 +42,9 @@
   
 ## Phase 4: Task 3
     
-  - **
+  - *Improved coupling in the GamePanel class by...*
+     - *creating a new method endGame which is called by both winGame and gameOver*
+     - *creating a new method updateButton which is called by updateButtons, reset, and printBoardSolution*
+     - *combined similar methods (flagMine + flagBlock and unFlagMine + unFlagBlock)*
+     - *using an int size as the length of the Box array and Container grid*
+  
